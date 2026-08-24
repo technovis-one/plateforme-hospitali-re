@@ -1,0 +1,33 @@
+
+import django.db.models.deletion
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = [
+        ('comptes', '0001_initial'),
+        ('dossier', '0001_initial'),
+        ('rdv', '0001_initial'),
+        ('stocks', '0001_initial'),
+    ]
+
+    operations = [
+        migrations.AddField(
+            model_name='consultation',
+            name='medicaments',
+            field=models.ManyToManyField(related_name='consultations', through='stocks.Prescription', to='stocks.medicament'),
+        ),
+        migrations.AddField(
+            model_name='consultation',
+            name='rendez_vous',
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='consultation', to='rdv.rendezvous'),
+        ),
+        migrations.AddField(
+            model_name='dossiermedical',
+            name='patient',
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='dossier_medical', to='comptes.patient'),
+        ),
+    ]

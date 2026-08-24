@@ -1,5 +1,4 @@
 from django.db import models
-# dossier/models.py
 from django.db import models
 
 

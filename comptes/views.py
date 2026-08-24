@@ -1,5 +1,4 @@
 
-# comptes/views.py
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -14,7 +13,7 @@ def connexion(request):
         if form.is_valid():
             user = authenticate(
                 request,
-                username=form.cleaned_data['email'],  # le backend cherche par email
+                username=form.cleaned_data['email'],  
                 password=form.cleaned_data['password']
             )
             if user is not None:
