@@ -1,11 +1,8 @@
-# comptes/backends.py
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
 
 
 class EmailBackend(ModelBackend):
-    """Permet de se connecter avec l'email au lieu du username Django par défaut."""
-
     def authenticate(self, request, username=None, password=None, **kwargs):
         UserModel = get_user_model()
         try:

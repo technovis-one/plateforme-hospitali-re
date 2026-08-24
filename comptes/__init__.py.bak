@@ -56,7 +56,7 @@ def deconnexion(request):
 @login_required
 def patient(request):
     if request.user.role != Utilisateur.ROLE_PATIENT:
-        messages.error(request, "Accès réservé aux patients.")
+        messages.error(request, "AccÃ¨s rÃ©servÃ© aux patients.")
         return redirect('accueil')
     return render(request, 'comptes/patient.html')
 
@@ -64,7 +64,7 @@ def patient(request):
 @login_required
 def medecin(request):
     if request.user.role != Utilisateur.ROLE_MEDECIN:
-        messages.error(request, "Accès réservé aux médecins.")
+        messages.error(request, "AccÃ¨s rÃ©servÃ© aux mÃ©decins.")
         return redirect('accueil')
     return render(request, 'comptes/medecin.html')
 
@@ -72,7 +72,7 @@ def medecin(request):
 @login_required
 def admin(request):
     if request.user.role != Utilisateur.ROLE_ADMIN:
-        messages.error(request, "Accès réservé aux administrateurs.")
+        messages.error(request, "AccÃ¨s rÃ©servÃ© aux administrateurs.")
         return redirect('accueil')
     return render(request, 'comptes/admin.html')
 

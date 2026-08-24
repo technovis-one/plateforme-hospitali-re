@@ -1,5 +1,4 @@
 from django.db import models
-# telemedecine/models.py
 from django.db import models
 
 
@@ -8,7 +7,7 @@ class SessionTelemedecine(models.Model):
     STATUT_TERMINEE = 'terminee'
     STATUT_CHOICES = [
         (STATUT_OUVERTE, 'Ouverte'),
-        (STATUT_TERMINEE, 'Terminée'),
+        (STATUT_TERMINEE, 'TerminÃ©e'),
     ]
 
     rendez_vous = models.OneToOneField(
@@ -19,7 +18,7 @@ class SessionTelemedecine(models.Model):
     date_fermeture = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f"Session téléconsultation — {self.rendez_vous}"
+        return f"Session tÃ©lÃ©consultation â€” {self.rendez_vous}"
 
 
 class Message(models.Model):
@@ -34,5 +33,4 @@ class Message(models.Model):
         ordering = ['date_envoi']
 
     def __str__(self):
-        return f"{self.auteur} — {self.date_envoi:%d/%m %H:%M}"
-# Create your models here.
+        return f"{self.auteur} â€” {self.date_envoi:%d/%m %H:%M}"

@@ -1,0 +1,35 @@
+[1mdiff --git a/comptes/models.py b/comptes/models.py[m
+[1mindex 3889e6a..e61de63 100644[m
+[1m--- a/comptes/models.py[m
+[1m+++ b/comptes/models.py[m
+[36m@@ -3,7 +3,6 @@[m [mfrom django.db import models[m
+ from django.contrib.auth.models import AbstractUser[m
+ [m
+ class Utilisateur(AbstractUser):[m
+[31m-    """Classe mère — remplace le User par défaut de Django."""[m
+ [m
+     ROLE_PATIENT = 'patient'[m
+     ROLE_MEDECIN = 'medecin'[m
+[36m@@ -21,7 +20,6 @@[m [mclass Utilisateur(AbstractUser):[m
+         return f"{self.first_name} {self.last_name} ({self.role})"[m
+ [m
+ class Patient(Utilisateur):[m
+[31m-    """Hérite d'Utilisateur (héritage multi-tables Django)."""[m
+     date_naissance = models.DateField()[m
+     num_tel = models.CharField(max_length=20)[m
+     adresse = models.CharField(max_length=255)[m
+[36m@@ -31,7 +29,6 @@[m [mclass Patient(Utilisateur):[m
+         verbose_name_plural = "Patients"[m
+ [m
+ class Medecin(Utilisateur):[m
+[31m-    """Hérite d'Utilisateur (héritage multi-tables Django)."""[m
+     specialite = models.CharField(max_length=100)[m
+     num_rpps = models.CharField(max_length=20, unique=True)[m
+     planning = models.TextField(blank=True)[m
+[36m@@ -39,5 +36,3 @@[m [mclass Medecin(Utilisateur):[m
+     class Meta:[m
+         verbose_name = "Médecin"[m
+         verbose_name_plural = "Médecins"[m
+[31m-[m
+[31m-# Create your models here.[m
+\ No newline at end of file[m

@@ -1,5 +1,4 @@
 from django.db import models
-# stocks/models.py
 from django.db import models
 
 
@@ -14,7 +13,7 @@ class Medicament(models.Model):
 
 
 class Prescription(models.Model):
-    """Classe d'association Consultation <-> Medicament (quantité, posologie)."""
+    """Classe d'association Consultation <-> Medicament (quantitÃ©, posologie)."""
     consultation = models.ForeignKey('dossier.Consultation', on_delete=models.CASCADE)
     medicament = models.ForeignKey(Medicament, on_delete=models.CASCADE)
     quantite = models.PositiveIntegerField(default=1)
@@ -22,4 +21,3 @@ class Prescription(models.Model):
 
     def __str__(self):
         return f"{self.medicament} x{self.quantite} ({self.consultation})"
-# Create your models here.

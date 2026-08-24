@@ -1,0 +1,321 @@
+[1mdiff --git a/NovaHospito/__init__.py b/NovaHospito/__init__.py[m
+[1mindex e69de29..ee54663 100644[m
+[1m--- a/NovaHospito/__init__.py[m
+[1m+++ b/NovaHospito/__init__.py[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32m"""[m
+[32m+[m[32mWSGI config for NovaHospito project.[m
+[32m+[m
+[32m+[m[32mIt exposes the WSGI callable as a module-level variable named ``application``.[m
+[32m+[m
+[32m+[m[32mFor more information on this file, see[m
+[32m+[m[32mhttps://docs.djangoproject.com/en/6.1/howto/deployment/wsgi/[m
+[32m+[m[32m"""[m
+[32m+[m
+[32m+[m[32mimport os[m
+[32m+[m
+[32m+[m[32mfrom django.core.wsgi import get_wsgi_application[m
+[32m+[m
+[32m+[m[32mos.environ.setdefault('DJANGO_SETTINGS_MODULE', 'NovaHospito.settings')[m
+[32m+[m
+[32m+[m[32mapplication = get_wsgi_application()[m
+[1mdiff --git a/NovaHospito/settings.py b/NovaHospito/settings.py[m
+[1mindex 022f4f1..650e3b3 100644[m
+[1m--- a/NovaHospito/settings.py[m
+[1m+++ b/NovaHospito/settings.py[m
+[36m@@ -11,25 +11,12 @@[m [mhttps://docs.djangoproject.com/en/6.1/ref/settings/[m
+ """[m
+ [m
+ from pathlib import Path[m
+[31m-[m
+[31m-# Build paths inside the project like this: BASE_DIR / 'subdir'.[m
+ BASE_DIR = Path(__file__).resolve().parent.parent[m
+[31m-[m
+[31m-[m
+[31m-# Quick-start development settings - unsuitable for production[m
+[31m-# See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/[m
+[31m-[m
+[31m-# SECURITY WARNING: keep the secret key used in production secret![m
+ SECRET_KEY = 'django-insecure-5(oqyp2tsf2b9f70)tm=%$if(q-!c6fwkb$2m_5q)^vw$@7+yp'[m
+[31m-[m
+[31m-# SECURITY WARNING: don't run with debug turned on in production![m
+ DEBUG = True[m
+ [m
+ ALLOWED_HOSTS = [][m
+ [m
+[31m-[m
+[31m-# Application definition[m
+[31m-[m
+ INSTALLED_APPS = [[m
+     'django.contrib.admin',[m
+     'django.contrib.auth',[m
+[36m@@ -74,10 +61,6 @@[m [mTEMPLATES = [[m
+ [m
+ WSGI_APPLICATION = 'NovaHospito.wsgi.application'[m
+ [m
+[31m-[m
+[31m-# Database[m
+[31m-# https://docs.djangoproject.com/en/6.1/ref/settings/#databases[m
+[31m-[m
+ DATABASES = {[m
+     'default': {[m
+         'ENGINE': 'django.db.backends.postgresql',[m
+[36m@@ -94,9 +77,6 @@[m [mAUTHENTICATION_BACKENDS = [[m
+ ][m
+ LOGIN_URL = 'accueil'[m
+ [m
+[31m-# Password validation[m
+[31m-# https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators[m
+[31m-[m
+ AUTH_PASSWORD_VALIDATORS = [[m
+     {[m
+         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',[m
+[36m@@ -112,10 +92,6 @@[m [mAUTH_PASSWORD_VALIDATORS = [[m
+     },[m
+ ][m
+ [m
+[31m-[m
+[31m-# Internationalization[m
+[31m-# https://docs.djangoproject.com/en/6.1/topics/i18n/[m
+[31m-[m
+ LANGUAGE_CODE = 'fr'[m
+ [m
+ TIME_ZONE = 'UTC'[m
+[36m@@ -124,17 +100,9 @@[m [mUSE_I18N = True[m
+ [m
+ USE_TZ = True[m
+ [m
+[31m-[m
+[31m-# Static files (CSS, JavaScript, Images)[m
+[31m-# https://docs.djangoproject.com/en/6.1/howto/static-files/[m
+[31m-[m
+ STATIC_URL = 'static/'[m
+ STATICFILES_DIRS = [BASE_DIR / 'static'][m
+ [m
+[31m-[m
+[31m-# Email[m
+[31m-# https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration[m
+[31m-[m
+ MAILERS = {[m
+     'default': {[m
+         'BACKEND': 'django.core.mail.backends.console.EmailBackend',[m
+[1mdiff --git a/comptes/__init__.py b/comptes/__init__.py[m
+[1mindex e69de29..cad6819 100644[m
+[1m--- a/comptes/__init__.py[m
+[1m+++ b/comptes/__init__.py[m
+[36m@@ -0,0 +1,78 @@[m
+[32m+[m
+[32m+[m[32mfrom django.contrib.auth import authenticate, login, logout[m
+[32m+[m[32mfrom django.contrib.auth.decorators import login_required[m
+[32m+[m[32mfrom django.shortcuts import render, redirect[m
+[32m+[m[32mfrom django.contrib import messages[m
+[32m+[m[32mfrom .forms import ConnexionForm, InscriptionPatientForm[m
+[32m+[m[32mfrom .models import Utilisateur[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef connexion(request):[m
+[32m+[m[32m    if request.method == 'POST':[m
+[32m+[m[32m        form = ConnexionForm(request.POST)[m
+[32m+[m[32m        if form.is_valid():[m
+[32m+[m[32m            user = authenticate([m
+[32m+[m[32m                request,[m
+[32m+[m[32m                username=form.cleaned_data['email'],[m[41m  [m
+[32m+[m[32m                password=form.cleaned_data['password'][m
+[32m+[m[32m            )[m
+[32m+[m[32m            if user is not None:[m
+[32m+[m[32m                login(request, user)[m
+[32m+[m[32m                return redirige_selon_role(user)[m
+[32m+[m[32m            else:[m
+[32m+[m[32m                messages.error(request, "Email ou mot de passe incorrect.")[m
+[32m+[m[32m    else:[m
+[32m+[m[32m        form = ConnexionForm()[m
+[32m+[m[32m    return render(request, 'comptes/accueil.html', {'form': form})[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef redirige_selon_role(user):[m
+[32m+[m[32m    if user.role == Utilisateur.ROLE_PATIENT:[m
+[32m+[m[32m        return redirect('patient')[m
+[32m+[m[32m    elif user.role == Utilisateur.ROLE_MEDECIN:[m
+[32m+[m[32m        return redirect('medecin')[m
+[32m+[m[32m    elif user.role == Utilisateur.ROLE_ADMIN:[m
+[32m+[m[32m        return redirect('admin')[m
+[32m+[m[32m    return redirect('accueil')[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef inscription(request):[m
+[32m+[m[32m    if request.method == 'POST':[m
+[32m+[m[32m        form = InscriptionPatientForm(request.POST)[m
+[32m+[m[32m        if form.is_valid():[m
+[32m+[m[32m            patient = form.save()[m
+[32m+[m[32m            login(request, patient)[m
+[32m+[m[32m            return redirect('patient')[m
+[32m+[m[32m    else:[m
+[32m+[m[32m        form = InscriptionPatientForm()[m
+[32m+[m[32m    return render(request, 'comptes/inscription.html', {'form': form})[m
+[32m+[m
+[32m+[m
+[32m+[m[32mdef deconnexion(request):[m
+[32m+[m[32m    logout(request)[m
+[32m+[m[32m    return redirect('accueil')[m
+[32m+[m
+[32m+[m
+[32m+[m[32m@login_required[m
+[32m+[m[32mdef patient(request):[m
+[32m+[m[32m    if request.user.role != Utilisateur.ROLE_PATIENT:[m
+[32m+[m[32m        messages.error(request, "AccÃ¨s rÃ©servÃ© aux patients.")[m
+[32m+[m[32m        return redirect('accueil')[m
+[32m+[m[32m    return render(request, 'comptes/patient.html')[m
+[32m+[m
+[32m+[m
+[32m+[m[32m@login_required[m
+[32m+[m[32mdef medecin(request):[m
+[32m+[m[32m    if request.user.role != Utilisateur.ROLE_MEDECIN:[m
+[32m+[m[32m        messages.error(request, "AccÃ¨s rÃ©servÃ© aux mÃ©decins.")[m
+[32m+[m[32m        return redirect('accueil')[m
+[32m+[m[32m    return render(request, 'comptes/medecin.html')[m
+[32m+[m
+[32m+[m
+[32m+[m[32m@login_required[m
+[32m+[m[32mdef admin(request):[m
+[32m+[m[32m    if request.user.role != Utilisateur.ROLE_ADMIN:[m
+[32m+[m[32m        messages.error(request, "AccÃ¨s rÃ©servÃ© aux administrateurs.")[m
+[32m+[m[32m        return redirect('accueil')[m
+[32m+[m[32m    return render(request, 'comptes/admin.html')[m
+[32m+[m
+[1mdiff --git a/comptes/admin.py b/comptes/admin.py[m
+[1mindex 9813944..e91cab3 100644[m
+[1m--- a/comptes/admin.py[m
+[1m+++ b/comptes/admin.py[m
+[36m@@ -1,5 +1,3 @@[m
+[31m-[m
+[31m-# comptes/admin.py[m
+ from django.contrib import admin[m
+ from django.contrib.auth.admin import UserAdmin[m
+ from .models import Utilisateur, Patient, Medecin[m
+[36m@@ -7,4 +5,3 @@[m [mfrom .models import Utilisateur, Patient, Medecin[m
+ admin.site.register(Utilisateur, UserAdmin)[m
+ admin.site.register(Patient)[m
+ admin.site.register(Medecin)[m
+[31m-# Register your models here.[m
+[1mdiff --git a/comptes/backends.py b/comptes/backends.py[m
+[1mindex f239f1e..0580aa2 100644[m
+[1m--- a/comptes/backends.py[m
+[1m+++ b/comptes/backends.py[m
+[36m@@ -1,11 +1,8 @@[m
+[31m-# comptes/backends.py[m
+ from django.contrib.auth.backends import ModelBackend[m
+ from django.contrib.auth import get_user_model[m
+ [m
+ [m
+ class EmailBackend(ModelBackend):[m
+[31m-    """Permet de se connecter avec l'email au lieu du username Django par défaut."""[m
+[31m-[m
+     def authenticate(self, request, username=None, password=None, **kwargs):[m
+         UserModel = get_user_model()[m
+         try:[m
+[1mdiff --git a/comptes/migrations/0001_initial.py b/comptes/migrations/0001_initial.py[m
+[1mindex 5aa5641..bcc2514 100644[m
+[1m--- a/comptes/migrations/0001_initial.py[m
+[1m+++ b/comptes/migrations/0001_initial.py[m
+[36m@@ -1,4 +1,3 @@[m
+[31m-# Generated by Django 6.1 on 2026-08-21 00:42[m
+ [m
+ import django.contrib.auth.models[m
+ import django.contrib.auth.validators[m
+[36m@@ -31,7 +30,7 @@[m [mclass Migration(migrations.Migration):[m
+                 ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),[m
+                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),[m
+                 ('email', models.EmailField(max_length=254, unique=True)),[m
+[31m-                ('role', models.CharField(choices=[('patient', 'Patient'), ('medecin', 'Médecin'), ('admin', 'Administrateur')], max_length=10)),[m
+[32m+[m[32m                ('role', models.CharField(choices=[('patient', 'Patient'), ('medecin', 'MÃ©decin'), ('admin', 'Administrateur')], max_length=10)),[m
+                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),[m
+                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),[m
+             ],[m
+[1mdiff --git a/comptes/migrations/__init__.py b/comptes/migrations/__init__.py[m
+[1mindex e69de29..bcc2514 100644[m
+[1m--- a/comptes/migrations/__init__.py[m
+[1m+++ b/comptes/migrations/__init__.py[m
+[36m@@ -0,0 +1,82 @@[m
+[32m+[m
+[32m+[m[32mimport django.contrib.auth.models[m
+[32m+[m[32mimport django.contrib.auth.validators[m
+[32m+[m[32mimport django.db.models.deletion[m
+[32m+[m[32mimport django.utils.timezone[m
+[32m+[m[32mfrom django.conf import settings[m
+[32m+[m[32mfrom django.db import migrations, models[m
+[32m+[m
+[32m+[m
+[32m+[m[32mclass Migration(migrations.Migration):[m
+[32m+[m
+[32m+[m[32m    initial = True[m
+[32m+[m
+[32m+[m[32m    dependencies = [[m
+[32m+[m[32m        ('auth', '0012_alter_user_first_name_max_length'),[m
+[32m+[m[32m    ][m
+[32m+[m
+[32m+[m[32m    operations = [[m
+[32m+[m[32m        migrations.CreateModel([m
+[32m+[m[32m            name='Utilisateur',[m
+[32m+[m[32m            fields=[[m
+[32m+[m[32m                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),[m
+[32m+[m[32m                ('password', models.CharField(max_length=128, verbose_name='password')),[m
+[32m+[m[32m                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),[m
+[32m+[m[32m                ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),[m
+[32m+[m[32m                ('username', models.CharField(error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username')),[m
+[32m+[m[32m                ('first_name', models.CharField(blank=True, max_length=150, verbose_name='first name')),[m
+[32m+[m[32m                ('last_name', models.CharField(blank=True, max_length=150, verbose_name='last name')),[m
+[32m+[m[32m                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),[m
+[32m+[m[32m                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),[m
+[32m+[m[32m                ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),[m
+[32m+[m[32m                ('email', models.EmailField(max_length=254, unique=True)),[m
+[32m+[m[32m                ('role', models.CharField(choices=[('patient', 'Patient'), ('medecin', 'MÃ©decin'), ('admin', 'Administrateur')], max_length=10)),[m
+[32m+[m[32m                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),[m
+[32m+[m[32m                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            options={[m
+[32m+[m[32m                'verbose_name': 'user',[m
+[32m+[m[32m                'verbose_name_plural': 'users',[m
+[32m+[m[32m                'abstract': False,[m
+[32m+[m[32m            },[m
+[32m+[m[32m            managers=[[m
+[32m+[m[32m                ('objects', django.contrib.auth.models.UserManager()),[m
+[32m+[m[32m            ],[m
+[32m+[m[32m        ),[m
+[32m+[m[32m        migrations.CreateModel([m
+[32m+[m[32m            name='Medecin',[m
+[32m+[m[32m            fields=[[m
+[32m+[m[32m                ('utilisateur_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),[m
+[32m+[m[32m                ('specialite', models.CharField(max_length=100)),[m
+[32m+[m[32m                ('num_rpps', models.CharField(max_length=20, unique=True)),[m
+[32m+[m[32m                ('planning', models.TextField(blank=True)),[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            options={[m
+[32m+[m[32m                'verbose_name': 'user',[m
+[32m+[m[32m                'verbose_name_plural': 'users',[m
+[32m+[m[32m                'abstract': False,[m
+[32m+[m[32m            },[m
+[32m+[m[32m            bases=('comptes.utilisateur',),[m
+[32m+[m[32m            managers=[[m
+[32m+[m[32m                ('objects', django.contrib.auth.models.UserManager()),[m
+[32m+[m[32m            ],[m
+[32m+[m[32m        ),[m
+[32m+[m[32m        migrations.CreateModel([m
+[32m+[m[32m            name='Patient',[m
+[32m+[m[32m            fields=[[m
+[32m+[m[32m                ('utilisateur_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),[m
+[32m+[m[32m                ('date_naissance', models.DateField()),[m
+[32m+[m[32m                ('num_tel', models.CharField(max_length=20)),[m
+[32m+[m[32m                ('adresse', models.CharField(max_length=255)),[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            options={[m
+[32m+[m[32m                'verbose_name': 'user',[m
+[32m+[m[32m                'verbose_name_plural': 'users',[m
+[32m+[m[32m                'abstract': False,[m
+[32m+[m[32m            },[m
+[32m+[m[32m            bases=('comptes.utilisateur',),[m
+[32m+[m[32m            managers=[[m
+[32m+[m[32m                ('objects', django.contrib.auth.models.UserManager()),[m
+[32m+[m[32m            ],[m
+[32m+[m[32m        ),[m
+[32m+[m[32m    ][m
+[1mdiff --git a/comptes/tes

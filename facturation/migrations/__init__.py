@@ -1,0 +1,27 @@
+
+import django.db.models.deletion
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = [
+        ('comptes', '0001_initial'),
+        ('dossier', '0001_initial'),
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='Facture',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('montant', models.DecimalField(decimal_places=2, max_digits=10)),
+                ('statut', models.CharField(choices=[('attente', 'En attente'), ('payee', 'PayÃ©e'), ('annulee', 'AnnulÃ©e')], default='attente', max_length=10)),
+                ('date', models.DateField(auto_now_add=True)),
+                ('consultation', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='facture', to='dossier.consultation')),
+                ('patient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='factures', to='comptes.patient')),
+            ],
+        ),
+    ]
