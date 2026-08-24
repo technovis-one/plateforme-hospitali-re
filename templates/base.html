@@ -1,0 +1,39 @@
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}NovaHospito{% endblock %}</title>
+
+<style>
+  :root{
+    --nh-blue:#0A60A5; --nh-blue-dark:#084b82; --nh-teal:#0D9EA2;
+    --nh-teal-light:#e6f6f6; --nh-blue-light:#e8f1fa; --nh-bg:#F7FAFC;
+  }
+  body{font-family:'Inter',sans-serif;background:var(--nh-bg);color:#1e293b;}
+  h1,h2,h3,.brand-font{font-family:'Poppins',sans-serif;}
+  .btn-nh{background:var(--nh-blue);border-color:var(--nh-blue);color:#fff;}
+  .btn-nh:hover{background:var(--nh-blue-dark);border-color:var(--nh-blue-dark);}
+  .btn-nh-outline{background:transparent;border:1.5px solid var(--nh-blue);color:var(--nh-blue);}
+  .btn-nh-outline:hover{background:var(--nh-blue);color:#fff;}
+  .text-nh-blue{color:var(--nh-blue);} .text-nh-teal{color:var(--nh-teal);}
+  .bg-nh-blue-light{background:var(--nh-blue-light);} .bg-nh-teal-light{background:var(--nh-teal-light);}
+  .gradient-nh{background:linear-gradient(135deg, var(--nh-blue) 0%, var(--nh-teal) 100%);}
+  .card-nh{background:#fff;border-radius:1rem;border:1px solid #e5e9f0;box-shadow:0 1px 3px rgba(10,96,165,.06);}
+  .sidebar-link{display:flex;align-items:center;gap:.75rem;padding:.65rem .9rem;border-radius:.6rem;color:#475569;font-weight:500;font-size:.925rem;}
+  .sidebar-link:hover{background:var(--nh-blue-light);color:var(--nh-blue);}
+  .sidebar-link.active{background:var(--nh-blue);color:#fff;}
+  .pub-link.active{color:var(--nh-blue);border-bottom:2px solid var(--nh-blue);padding-bottom:4px;}
+</style>
+{% block extra_head %}
+{% endblock %}
+</head>
+<body class="min-h-screen">
+{% block content %}
+{% endblock %}
+</body>
+</html>

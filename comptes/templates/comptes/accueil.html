@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}NovaHospito — Accueil{% endblock %}
+
+{% block content %}
+  <header class="w-full bg-white border-b border-slate-100 sticky top-0 z-40">
+    <div class="max-w-full mx-auto flex items-center justify-between px-6 py-4 gap-6">
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <img src="{% static 'img/logo.png' %}" class="w-11 h-11" alt="NovaHospito"/>
+        <div>
+          <div class="brand-font font-bold text-lg leading-none text-nh-blue">NovaHospito</div>
+          <div class="text-[11px] text-slate-400 tracking-wide">Votre santé, connectée</div>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-10 text-sm font-semibold text-slate-600 mx-auto">
+        <a href="{% url 'accueil' %}" class="pub-link active">Accueil</a>
+        <a href="#" class="pub-link ">Menu</a>
+        <a href="#" class="pub-link ">Espace patient</a>
+        <a href="#" class="pub-link ">Espace medecin</a>
+        <a href="#" class="pub-link "> Espace admin</a>
+        <a href="#" class="pub-link ">À propos</a>
+        
+      </nav>
+      <div class="flex items-center flex-shrink-0">
+        <label class="input input-bordered input-sm flex items-center gap-2 rounded-full w-44 md:w-56">
+          <input type="text" class="grow text-sm" placeholder="Rechercher..." />
+          <span class="text-slate-400">🔎</span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-10 items-stretch">
+    <div class="gradient-nh text-white rounded-3xl p-10 flex flex-col justify-center">
+      <div class="text-xs font-semibold tracking-widest text-white/70 mb-3">PLATEFORME HOSPITALIÈRE</div>
+      <h1 class="brand-font text-3xl md:text-4xl font-bold leading-tight mb-5">Votre clinique,<br/>toujours à portée de main.</h1>
+      <p class="text-white/85 mb-8 max-w-md">Prenez rendez-vous, consultez votre dossier médical et échangez avec votre médecin en téléconsultation — en toute sécurité.</p>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+          <div class="text-xl mb-2">📅</div>
+          <div class="font-semibold text-sm mb-1">Prise de RDV</div>
+          <div class="text-xs text-white/70">Médecin et créneau en quelques clics.</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+          <div class="text-xl mb-2">📁</div>
+          <div class="font-semibold text-sm mb-1">Dossier médical</div>
+          <div class="text-xs text-white/70">Antécédents et ordonnances centralisés.</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+          <div class="text-xl mb-2">🎥</div>
+          <div class="font-semibold text-sm mb-1">Téléconsultation</div>
+          <div class="text-xs text-white/70">Chat et visio sécurisés.</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-4 border border-white/20">
+          <div class="text-xl mb-2">💳</div>
+          <div class="font-semibold text-sm mb-1">Facturation</div>
+          <div class="text-xs text-white/70">Paiement via Mobile Money.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-nh p-10 flex flex-col justify-center">
+      <center ><img src="{% static 'img/logo.png' %}" alt="NovaHospito" class="w-16 h-16 mx-auto mb-4"><div class="brand-font font-bold text-lg leading-none text-nh-blue">NovaHospito </div></h2></center>
+      <div class="brand-font font-bold text-xl mb-1">Connexion</div>
+      <div class="text-sm text-slate-400 mb-6">Accédez à votre espace NovaHospito</div>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-error text-sm mb-4 py-2">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" action="{% url 'accueil' %}">
+        {% csrf_token %}
+        <div class="form-control mb-4">
+          <label class="label text-sm font-medium text-slate-600">Adresse email</label>
+          <input type="email" placeholder="exple@exemple.com" class="input input-bordered"/>
+          {{ form.email }}
+          {% if form.email.errors %}<p class="text-red-500 text-xs mt-1">{{ form.email.errors.0 }}</p>{% endif %}
+        </div>
+        <div class="form-control mb-2">
+          <label class="label text-sm font-medium text-slate-600">Mot de passe</label>
+          <input type="password" placeholder="mot de passe securise" class="input input-bordered"/>
+          {{ form.password }}
+          {% if form.password.errors %}<p class="text-red-500 text-xs mt-1">{{ form.password.errors.0 }}</p>{% endif %}
+        </div>
+        <div class="text-right mb-5"><a class="text-xs text-nh-blue font-medium">Mot de passe oublié ?</a></div>
+        <button type="submit" class="btn btn-nh w-full rounded-full mb-4">Se connecter</button>
+      </form>
+
+      <div class="divider text-xs text-slate-400">nouveau sur NovaHospito ?</div>
+      <a href="{% url 'inscription' %}" class="btn btn-nh-outline w-full rounded-full">Créer un compte patient</a>
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-6 pb-16">
+    <h2 class="brand-font text-2xl font-bold text-center mb-2">Tout votre parcours de soin, en un seul endroit</h2>
+    <p class="text-center text-slate-500 mb-10">Pensé pour les patients, les médecins et le personnel administratif</p>
+    <div class="grid md:grid-cols-4 gap-5">
+      <div class="card-nh p-6">
+        <div class="w-11 h-11 rounded-xl bg-nh-blue-light flex items-center justify-center text-xl mb-4">📅</div>
+        <div class="font-semibold mb-1">Prise de RDV</div>
+        <div class="text-sm text-slate-500">Choisissez un médecin et un créneau en quelques clics.</div>
+      </div>
+      <div class="card-nh p-6">
+        <div class="w-11 h-11 rounded-xl bg-nh-teal-light flex items-center justify-center text-xl mb-4">📁</div>
+        <div class="font-semibold mb-1">Dossier médical</div>
+        <div class="text-sm text-slate-500">Antécédents, ordonnances et résultats centralisés.</div>
+      </div>
+      <div class="card-nh p-6">
+        <div class="w-11 h-11 rounded-xl bg-nh-blue-light flex items-center justify-center text-xl mb-4">🎥</div>
+        <div class="font-semibold mb-1">Téléconsultation</div>
+        <div class="text-sm text-slate-500">Consultez votre médecin par chat ou visioconférence sécurisée.</div>
+      </div>
+      <div class="card-nh p-6">
+        <div class="w-11 h-11 rounded-xl bg-nh-teal-light flex items-center justify-center text-xl mb-4">💳</div>
+        <div class="font-semibold mb-1">Facturation</div>
+        <div class="text-sm text-slate-500">Consultez et réglez vos factures via Mobile Money.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-slate-900 text-slate-400 text-sm py-8">
+    <div class="max-w-full mx-auto px-6 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <img src="{% static 'img/logo.png' %}" class="w-7 h-7"/>
+        <span class="text-white font-semibold brand-font">NovaHospito</span>
+      </div>
+      <span>© 2026 NovaHospito — Plateforme hospitalière</span>
+    </div>
+  </footer>
+{% endblock %}
