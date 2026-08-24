@@ -1,5 +1,4 @@
 from django.db import models
-# facturation/models.py
 from django.db import models
 
 

@@ -42,7 +42,7 @@ def inscription(request):
         form = InscriptionPatientForm(request.POST)
         if form.is_valid():
             patient = form.save()
-            login(request, patient)
+            login(request, patient, backend='comptes.backends.EmailBackend')
             return redirect('patient')
     else:
         form = InscriptionPatientForm()

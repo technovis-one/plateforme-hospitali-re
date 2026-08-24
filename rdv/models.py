@@ -1,7 +1,5 @@
 from django.db import models
-# rdv/models.py
 from django.db import models
-
 
 class RendezVous(models.Model):
     STATUT_ATTENTE = 'attente'
