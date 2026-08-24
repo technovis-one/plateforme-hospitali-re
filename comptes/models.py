@@ -1,14 +1,6 @@
 from django.db import models
-<<<<<<< HEAD
-
-=======
->>>>>>> 82e4bd6b52568053566e7eee5790a804ac6a868c
 from django.contrib.auth.models import AbstractUser
 class Utilisateur(AbstractUser):
-<<<<<<< HEAD
-=======
-
->>>>>>> 82e4bd6b52568053566e7eee5790a804ac6a868c
     ROLE_PATIENT = 'patient'
     ROLE_MEDECIN = 'medecin'
     ROLE_ADMIN = 'admin'
@@ -34,17 +26,11 @@ class Patient(Utilisateur):
         verbose_name_plural = "Patients"
 
 class Medecin(Utilisateur):
-<<<<<<< HEAD
 
-=======
->>>>>>> 82e4bd6b52568053566e7eee5790a804ac6a868c
     specialite = models.CharField(max_length=100)
     num_rpps = models.CharField(max_length=20, unique=True)
     planning = models.TextField(blank=True)
     class Meta:
         verbose_name = "Médecin"
         verbose_name_plural = "Médecins"
-<<<<<<< HEAD
 
-=======
->>>>>>> 82e4bd6b52568053566e7eee5790a804ac6a868c
