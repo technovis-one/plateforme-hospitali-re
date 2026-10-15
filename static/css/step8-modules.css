@@ -1,0 +1,30 @@
+.nh-invoice-form__panel { max-width:760px; margin:0 auto; padding:22px; border:1px solid var(--nh-patient-border); border-radius:14px; background:#fff; box-shadow:0 4px 16px rgb(26 39 70 / 5%); }
+.nh-invoice-form__heading h2 { margin:0 0 6px; color:var(--nh-patient-ink); font-size:20px; }
+.nh-invoice-form__heading p { margin:0 0 18px; color:#69758e; font-size:13px; line-height:1.55; }
+.nh-invoice-form__field { display:flex; flex-direction:column; gap:7px; margin-bottom:15px; }
+.nh-invoice-form__field label { color:#34405a; font-size:13px; font-weight:700; }
+.nh-invoice-form__field label span { color:#b73543; }
+.nh-invoice-form__input { width:100%; min-height:45px; padding:10px 12px; border:1px solid #dfe4ef; border-radius:8px; background:#fff; color:#17203a; font:inherit; font-size:14px; }
+.nh-invoice-form__input:focus { border-color:#4a5fe8; outline:3px solid rgb(74 95 232 / 15%); }
+.nh-invoice-form__warning { display:flex; flex-direction:column; gap:5px; margin:17px 0; padding:13px 14px; border:1px solid #ecd8b3; border-radius:10px; background:#fff9ee; color:#755116; font-size:12px; line-height:1.55; }
+.nh-invoice-form__actions { display:flex; justify-content:flex-end; align-items:center; gap:12px; margin-top:17px; }
+.nh-invoice-form__actions a { color:#5e6b85; font-size:13px; text-decoration:none; }
+.nh-invoice-form__actions button,.nh-invoice-form__create-link { display:inline-flex; min-height:42px; align-items:center; justify-content:center; padding:0 14px; border:0; border-radius:8px; background:#4a5fe8; color:#fff!important; font:inherit; font-size:13px; font-weight:700; text-decoration:none; cursor:pointer; }
+.nh-invoice-form__actions button:hover,.nh-invoice-form__create-link:hover { background:#3b4ed0; }
+.nh-invoice-form__error { color:#a43240; font-size:12px; line-height:1.5; }
+.nh-invoice-form__messages p { padding:10px 12px; border-radius:8px; background:#e8f6ed; color:#187448; }
+.nh-invoices__heading-actions { display:flex; align-items:center; gap:9px; }
+.nh-invoice-form__create-link { min-height:34px; white-space:nowrap; }
+.nh-booking__call-link { display:inline-flex; align-items:center; justify-content:center; min-height:34px; padding:0 10px; border-radius:8px; background:#4a5fe8; color:#fff!important; font-size:12px; font-weight:700; text-decoration:none; white-space:nowrap; }
+.nh-booking__call-link:hover { background:#3b4ed0; }
+.nh-staff__empty-note { padding:14px 0; color:#74809b; font-size:13px; }
+.nh-clinic__billing-note { margin:12px 0; color:#68748e; font-size:12px; line-height:1.55; }
+.nh-patient__dossier-link { display:inline-flex; align-items:center; gap:5px; margin-top:7px; color:#3b4ed0!important; font-size:12px; font-weight:700; text-decoration:none; }
+.nh-patient__dossier-link:hover { text-decoration:underline; }
+@media(max-width:760px) { .nh-invoice-form__panel { padding:15px; } .nh-invoices__heading-actions { align-items:flex-end; flex-direction:column; } .nh-booking__call-link { width:100%; } }
+
+.nh-rdv-confirm { margin-left:auto; }
+.nh-rdv-confirm button { min-height:34px; padding:0 11px; border:0; border-radius:8px; background:#4a5fe8; color:#fff; font:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+.nh-rdv-confirm button:hover { background:#3b4ed0; }
+.nh-rdv-confirm button:focus-visible { outline:3px solid rgb(74 95 232 / 28%); outline-offset:2px; }
+@media(max-width:760px) { .nh-rdv-confirm { width:100%; margin:4px 0 0; } .nh-rdv-confirm button { width:100%; min-height:40px; } }

@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#141b2e">
+    <title>NovaHospito — Téléconsultation</title>
+    <link rel="stylesheet" href="{% static 'css/patient.css' %}">
+    <link rel="stylesheet" href="{% static 'css/patient-lisibilite.css' %}?v=20261008-teleconsult-1">
+    <link rel="stylesheet" href="{% static 'css/teleconsultation.css' %}?v=20261008-1">
+    <link rel="stylesheet" href="{% static 'css/patient-navigation.css' %}?v=20261010-1">
+</head>
+<body>
+<div class="nh-patient nh-teleconsult-page">
+    <aside class="nh-patient__sidebar">
+        <a class="nh-patient__brand" href="{% if is_doctor %}{% url 'medecin' %}{% else %}{% url 'patient' %}{% endif %}" aria-label="NovaHospito — retour à mon espace"><img src="{% static 'img/logo.png' %}" alt="" width="38" height="38"><span>Nova<span>Hospito</span><small>LA SANTÉ, ENSEMBLE</small></span></a>
+        <div class="nh-patient__workspace"><span>VOTRE ESPACE</span><strong>{% if is_doctor %}Espace médecin{% else %}Espace patient{% endif %}</strong></div>
+        <p class="nh-patient__nav-label">MENU PRINCIPAL</p>
+        {% if is_doctor %}{% include "comptes/partials/doctor-navigation.html" with active_page="teleconsultation" navigation_style="patient" %}{% else %}<nav class="nh-patient__nav" aria-label="Navigation">
+            <a href="{% if is_doctor %}{% url 'medecin' %}{% else %}{% url 'patient' %}{% endif %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Tableau de bord</span></a>
+            {% if not is_doctor %}<a href="{% url 'rdv:rendezvous' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span>Rendez-vous</span></a><a href="{% url 'dossier:medical' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h6"/></svg><span>Dossier médical</span></a><a href="{% url 'facturation:historique' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h4"/></svg><span>Facturation</span></a><a class="is-active" href="{% url 'rdv:teleconsultations' %}" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg><span>Téléconsultation</span></a>{% endif %}
+        </nav>{% endif %}
+        {% include "comptes/partials/patient-sidebar-footer.html" %}
+    </aside>
+    <div class="nh-patient__main">
+        <header class="nh-patient__topbar"><p class="nh-patient__breadcrumb"><a href="{% if is_doctor %}{% url 'medecin' %}{% else %}{% url 'patient' %}{% endif %}">NovaHospito</a><span>/</span><strong>Téléconsultation</strong></p><div class="nh-patient__top-actions"><span class="nh-patient__secure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Salle privée</span><span class="nh-patient__avatar nh-patient__avatar--top">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span><span class="nh-patient__top-user"><strong>{{ user.get_full_name|default:user.username }}</strong><small>{% if is_doctor %}Médecin{% else %}Patient{% endif %}</small></span></div></header>
+        <main class="nh-patient__content">
+            <section class="nh-patient__welcome nh-teleconsult__hero"><div><p class="nh-patient__eyebrow"><span></span> CONSULTATION CONFIDENTIELLE</p><h1>Téléconsultation</h1><p>{% if is_doctor %}Consultation avec {{ appointment.patient.get_full_name|default:appointment.patient.username }}{% else %}Rendez-vous avec Dr. {{ appointment.medecin.get_full_name|default:appointment.medecin.username }}{% endif %}</p></div><a class="nh-patient__welcome-link" href="{% if is_doctor %}{% url 'rdv:teleconsultations' %}{% else %}{% url 'rdv:rendezvous' %}#upcoming{% endif %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"/></svg>Retour</a></section>
+            <section class="nh-teleconsult__meta" aria-label="Détails du rendez-vous"><div><small>DATE</small><strong>{{ appointment.date|date:"l d F Y" }}</strong></div><div><small>HEURE</small><strong>{{ appointment.heure|time:"H:i" }}</strong></div><div><small>STATUT</small><strong>{% if appointment.statut == 'attente' %}En attente{% elif appointment.statut == 'confirme' %}Confirmé{% elif appointment.statut == 'termine' %}Terminé{% else %}Annulé{% endif %}</strong></div><div><small>PARTICIPANT</small><strong>{% if is_doctor %}{{ appointment.patient.get_full_name|default:appointment.patient.username }}{% else %}Dr. {{ appointment.medecin.get_full_name|default:appointment.medecin.username }}{% endif %}</strong></div></section>
+            {% if error %}<section class="nh-teleconsult__notice" role="alert"><strong>Appel non démarré</strong><p>{{ error }}</p></section>{% endif %}
+            {% if appointment.statut != 'confirme' %}<section class="nh-teleconsult__notice"><strong>En attente de confirmation</strong><p>La salle privée sera accessible uniquement après confirmation de ce rendez-vous.</p></section>
+            {% elif not in_call_window %}<section class="nh-teleconsult__notice"><strong>La salle n’est pas encore ouverte</strong><p>Tu peux rejoindre la salle entre 15 minutes avant l’heure du rendez-vous et 60 minutes après son début. Si le créneau vient d’être confirmé, vérifie la date et l’heure enregistrées.</p></section>
+            {% elif not daily_configured %}<section class="nh-teleconsult__notice"><strong>Service d’appel à configurer</strong><p>Le code est prêt, mais le serveur doit recevoir la clé Daily dans sa variable d’environnement avant l’ouverture des appels.</p></section>
+            {% endif %}
+            {% if meeting_config %}
+                <section class="nh-teleconsult__call-panel" aria-labelledby="nh-call-title"><div class="nh-teleconsult__call-heading"><div><p>APPEL AUDIO / VIDÉO ET CHAT</p><h2 id="nh-call-title">Salle de consultation</h2></div><span class="nh-teleconsult__live"><i></i>Connexion sécurisée</span></div><div id="daily-call" class="nh-teleconsult__frame" aria-label="Interface d’appel audio, vidéo et messagerie"></div><p id="daily-status" class="nh-teleconsult__status" role="status" aria-live="polite">Connexion au service d’appel…</p><noscript><p class="nh-teleconsult__notice">JavaScript doit être activé pour lancer l’appel.</p></noscript></section>
+                {{ meeting_config|json_script:"daily-meeting-config" }}
+                <script crossorigin src="https://unpkg.com/@daily-co/daily-js@0.93.0"></script>
+                <script>
+                (() => {
+                    const status = document.getElementById('daily-status');
+                    const mount = document.getElementById('daily-call');
+                    const configNode = document.getElementById('daily-meeting-config');
+                    if (!window.Daily || !configNode || !mount) {
+                        status.textContent = 'Impossible de charger l’interface d’appel. Vérifie la connexion réseau puis réessaie.';
+                        return;
+                    }
+                    try {
+                        const meeting = JSON.parse(configNode.textContent);
+                        const call = window.Daily.createFrame(mount, {
+                            showLeaveButton: true,
+                            iframeStyle: { width: '100%', height: '100%', border: '0', borderRadius: '12px' }
+                        });
+                        call.join({ url: meeting.url, token: meeting.token })
+                            .then(() => { status.textContent = 'Tu es dans la salle. Autorise le microphone ou la caméra dans ton navigateur si tu souhaites les utiliser.'; })
+                            .catch(() => { status.textContent = 'La connexion à la salle a échoué. Vérifie ta connexion, l’autorisation du navigateur et l’horaire du rendez-vous, puis réessaie.'; });
+                        window.addEventListener('pagehide', () => { call.leave().catch(() => {}); call.destroy(); }, { once: true });
+                    } catch (_) {
+                        status.textContent = 'Impossible de préparer l’appel. Recharge la page et vérifie que les scripts Daily ne sont pas bloqués.';
+                    }
+                })();
+                </script>
+            {% elif can_join %}
+                <section class="nh-teleconsult__join"><span class="nh-teleconsult__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg></span><div><strong>Prêt à rejoindre la consultation ?</strong><p>La salle utilise le microphone, la caméra et le chat intégrés à l’appel. Ton navigateur demandera les autorisations au démarrage.</p></div><form method="post">{% csrf_token %}<button type="submit" class="nh-teleconsult__join-button">Rejoindre la salle <span aria-hidden="true">→</span></button></form></section>
+            {% endif %}
+            <section class="nh-teleconsult__privacy"><strong>Confidentialité et consentement</strong><p>NovaHospito ne lance aucun enregistrement et masque la commande d’enregistrement dans l’interface. Le chat est fourni par Daily pendant l’appel, sans archivage dans NovaHospito. Vérifie également les paramètres et les conditions contractuelles Daily avant tout usage avec des données de santé réelles. Active ton microphone ou ta caméra seulement après avoir donné l’autorisation dans le navigateur. Pour les appels réels, ouvre le site en HTTPS (localhost est accepté pour le développement).</p></section>
+            <footer class="nh-patient__footer"><span>NovaHospito · Salle privée</span><span>Appels Daily · Pas d’enregistrement lancé par NovaHospito · Chat non archivé ici</span></footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

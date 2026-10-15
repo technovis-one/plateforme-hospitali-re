@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#141b2e">
+    <title>NovaHospito — Mes rendez-vous</title>
+    <link rel="stylesheet" href="{% static 'css/patient.css' %}">
+    <link rel="stylesheet" href="{% static 'css/rendez-vous.css' %}">
+    <link rel="stylesheet" href="{% static 'css/step8-modules.css' %}?v=20261008-1">
+</head>
+<body>
+<div class="nh-patient nh-booking" id="top">
+    <aside class="nh-patient__sidebar">
+        <a class="nh-patient__brand" href="{% url 'patient' %}" aria-label="NovaHospito — mon espace patient">
+            <img src="{% static 'img/logo.png' %}" alt="" width="38" height="38">
+            <span>Nova<span>Hospito</span><small>LA SANTÉ, ENSEMBLE</small></span>
+        </a>
+        <div class="nh-patient__workspace"><span>VOTRE ESPACE</span><strong>Espace patient</strong></div>
+        <p class="nh-patient__nav-label">MENU PRINCIPAL</p>
+        <nav class="nh-patient__nav" aria-label="Navigation patient">
+            <a href="{% url 'patient' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Tableau de bord</span></a>
+            <a class="is-active" href="{% url 'rdv:rendezvous' %}" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M12 14v4M10 16h4"/></svg><span>Rendez-vous</span></a>
+            <a href="{% url 'patient' %}#medical-file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h6"/></svg><span>Dossier médical</span></a>
+            <a href="{% url 'facturation:historique' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h3"/></svg><span>Facturation</span></a>
+            <a href="{% url 'patient' %}#consultations"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg><span>Téléconsultation</span></a>
+        </nav>
+        <div class="nh-patient__sidebar-spacer"></div>
+        <a class="nh-patient__logout" href="{% url 'deconnexion' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>Se déconnecter</a>
+        <div class="nh-patient__side-profile"><span class="nh-patient__avatar nh-patient__avatar--small">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span><span class="nh-patient__side-profile-copy"><strong>{{ user.get_full_name|default:user.username }}</strong><small>Patient</small></span></div>
+    </aside>
+
+    <div class="nh-patient__main">
+        <header class="nh-patient__topbar"><p class="nh-patient__breadcrumb"><a href="{% url 'patient' %}">NovaHospito</a> <span>/</span> <strong>Rendez-vous</strong></p><div class="nh-patient__top-actions"><span class="nh-patient__secure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Espace sécurisé</span><span class="nh-patient__avatar nh-patient__avatar--top">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span><span class="nh-patient__top-user"><strong>{{ user.get_full_name|default:user.username }}</strong><small>Patient</small></span></div></header>
+
+        <main class="nh-patient__content">
+            <section class="nh-patient__welcome nh-booking__hero"><div><p class="nh-patient__eyebrow"><span></span> ESPACE PATIENT</p><h1>Mes rendez-vous</h1><p>Choisissez un médecin et demandez un créneau de consultation.</p></div><a class="nh-patient__welcome-link" href="{% url 'patient' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"/></svg>Retour au tableau de bord</a></section>
+
+            {% if messages %}<div class="nh-booking__messages" aria-live="polite">{% for message in messages %}<p class="nh-booking__message nh-booking__message--{{ message.tags|default:'info' }}">{{ message }}</p>{% endfor %}</div>{% endif %}
+
+            {% if profile_missing %}
+                <section class="nh-booking__notice" role="alert"><strong>Profil patient à compléter</strong><p>Votre compte est connecté, mais sa fiche patient n’est pas encore reliée. La demande de rendez-vous est désactivée jusqu’à ce que le profil soit réparé. Aucun compte ni rendez-vous n’a été créé.</p></section>
+            {% else %}
+                <section class="nh-booking__grid">
+                    <article class="nh-booking__panel">
+                        <div class="nh-booking__panel-heading"><span class="nh-booking__panel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></span><div><p class="nh-patient__section-kicker">NOUVELLE DEMANDE</p><h2>Réserver une consultation</h2></div></div>
+                        <p class="nh-booking__intro">Votre demande sera enregistrée et apparaîtra « En attente » jusqu’à sa confirmation.</p>
+                        <form method="post" class="nh-booking__form">
+                            {% csrf_token %}
+                            {% if form.non_field_errors %}<div class="nh-booking__errors">{{ form.non_field_errors }}</div>{% endif %}
+                            <div class="nh-booking__field"><label for="{{ form.medecin.id_for_label }}">{{ form.medecin.label }}</label>{{ form.medecin }}{% if form.medecin.errors %}<span class="nh-booking__error">{{ form.medecin.errors|striptags }}</span>{% endif %}{% if not form.fields.medecin.queryset %}<span class="nh-booking__hint">Aucun médecin actif n’est encore disponible.</span>{% endif %}</div>
+                            <div class="nh-booking__form-row"><div class="nh-booking__field"><label for="{{ form.date.id_for_label }}">{{ form.date.label }}</label>{{ form.date }}{% if form.date.errors %}<span class="nh-booking__error">{{ form.date.errors|striptags }}</span>{% endif %}</div><div class="nh-booking__field"><label for="{{ form.heure.id_for_label }}">{{ form.heure.label }}</label>{{ form.heure }}{% if form.heure.errors %}<span class="nh-booking__error">{{ form.heure.errors|striptags }}</span>{% endif %}</div></div>
+                            <div class="nh-booking__field"><label for="{{ form.type.id_for_label }}">{{ form.type.label }}</label>{{ form.type }}{% if form.type.errors %}<span class="nh-booking__error">{{ form.type.errors|striptags }}</span>{% endif %}</div>
+                            <div class="nh-booking__privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Votre demande sera créée avec le statut <strong>En attente</strong>. Aucun paiement n’est demandé ici.</span></div>
+                            <button class="nh-booking__submit" type="submit">Envoyer ma demande <span aria-hidden="true">→</span></button>
+                        </form>
+                    </article>
+                    <aside class="nh-booking__side-note"><span class="nh-booking__side-note-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span><strong>Comment ça marche ?</strong><ol><li>Choisissez un médecin parmi les comptes actifs.</li><li>Indiquez la date, l’heure et le mode de consultation souhaités.</li><li>Votre demande apparaît en attente de confirmation.</li></ol><p>Un créneau déjà demandé ou annulé est géré par la validation du formulaire.</p></aside>
+                </section>
+
+                <section class="nh-patient__appointments nh-booking__list" id="upcoming" aria-labelledby="nh-booking-upcoming-title"><div class="nh-patient__section-heading"><div><p class="nh-patient__section-kicker">SUIVI</p><h2 id="nh-booking-upcoming-title">À venir</h2><p>Vos demandes et rendez-vous futurs.</p></div><span class="nh-patient__count">{{ upcoming_appointments|length }} rendez-vous</span></div>
+                    {% if upcoming_appointments %}<div class="nh-patient__appointment-list">{% for rdv in upcoming_appointments %}<article class="nh-patient__appointment"><span class="nh-patient__doctor-avatar{% if forloop.counter|divisibleby:2 %} nh-patient__doctor-avatar--alt{% endif %}" aria-hidden="true">{{ rdv.medecin.first_name|slice:":1"|upper }}{{ rdv.medecin.last_name|slice:":1"|upper }}</span><div class="nh-patient__appointment-main"><strong>Dr. {{ rdv.medecin.get_full_name }}</strong><span>{{ rdv.medecin.specialite }} · {% if rdv.type == 'presentiel' %}Présentiel{% elif rdv.type == 'teleconsultation' %}Téléconsultation{% else %}Type non défini{% endif %}</span></div><div class="nh-patient__appointment-date"><strong>{{ rdv.date|date:"d M Y" }}</strong><span>{{ rdv.heure|time:"H:i" }}</span></div><span class="nh-patient__status {% if rdv.statut == 'annule' %}nh-patient__status--cancelled{% elif rdv.statut == 'termine' %}nh-patient__status--done{% else %}nh-patient__status--upcoming{% endif %}">{% if rdv.statut == 'attente' %}En attente{% elif rdv.statut == 'confirme' %}Confirmé{% elif rdv.statut == 'annule' %}Annulé{% elif rdv.statut == 'termine' %}Terminé{% else %}Statut inconnu{% endif %}</span>{% if rdv.type == 'teleconsultation' and rdv.statut == 'confirme' %}<a class="nh-booking__call-link" href="{% url 'rdv:teleconsultation' rdv.pk %}">Rejoindre l’appel</a>{% endif %}</article>{% endfor %}</div>{% else %}<div class="nh-patient__empty"><span class="nh-patient__empty-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></span><strong>Aucun rendez-vous à venir</strong><p>Vos demandes de rendez-vous s’afficheront ici.</p></div>{% endif %}
+                </section>
+
+                <section class="nh-patient__appointments nh-booking__list" id="past" aria-labelledby="nh-booking-past-title"><div class="nh-patient__section-heading"><div><p class="nh-patient__section-kicker">HISTORIQUE</p><h2 id="nh-booking-past-title">Rendez-vous passés</h2><p>Les consultations précédentes enregistrées à votre nom.</p></div><span class="nh-patient__count">{{ past_appointments|length }} rendez-vous</span></div>
+                    {% if past_appointments %}<div class="nh-patient__appointment-list">{% for rdv in past_appointments %}<article class="nh-patient__appointment"><span class="nh-patient__doctor-avatar{% if forloop.counter|divisibleby:2 %} nh-patient__doctor-avatar--alt{% endif %}" aria-hidden="true">{{ rdv.medecin.first_name|slice:":1"|upper }}{{ rdv.medecin.last_name|slice:":1"|upper }}</span><div class="nh-patient__appointment-main"><strong>Dr. {{ rdv.medecin.get_full_name }}</strong><span>{{ rdv.medecin.specialite }} · {% if rdv.type == 'presentiel' %}Présentiel{% elif rdv.type == 'teleconsultation' %}Téléconsultation{% else %}Type non défini{% endif %}</span></div><div class="nh-patient__appointment-date"><strong>{{ rdv.date|date:"d M Y" }}</strong><span>{{ rdv.heure|time:"H:i" }}</span></div><span class="nh-patient__status {% if rdv.statut == 'annule' %}nh-patient__status--cancelled{% elif rdv.statut == 'termine' %}nh-patient__status--done{% else %}nh-patient__status--upcoming{% endif %}">{% if rdv.statut == 'attente' %}En attente{% elif rdv.statut == 'confirme' %}Confirmé{% elif rdv.statut == 'annule' %}Annulé{% elif rdv.statut == 'termine' %}Terminé{% else %}Statut inconnu{% endif %}</span></article>{% endfor %}</div>{% else %}<div class="nh-patient__empty"><strong>Aucun rendez-vous passé</strong><p>Votre historique apparaîtra ici.</p></div>{% endif %}
+                </section>
+            {% endif %}
+            <footer class="nh-patient__footer"><span>NovaHospito · Espace sécurisé</span><span>Demandes enregistrées en attente de confirmation</span></footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

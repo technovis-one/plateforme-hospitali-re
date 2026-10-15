@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#141b2e">
+    <title>NovaHospito — Espace clinique</title>
+    <link rel="stylesheet" href="{% static 'css/staff.css' %}">
+    <link rel="stylesheet" href="{% static 'css/clinic.css' %}">
+</head>
+<body>
+<div class="nh-staff nh-clinic" id="overview">
+    <aside class="nh-staff__sidebar">
+        <a class="nh-staff__brand" href="#overview" aria-label="NovaHospito, espace clinique">
+            <img src="{% static 'img/logo.png' %}" alt="" width="38" height="38">
+            <span>Nova<span>Hospito</span><small>GESTION HOSPITALIÈRE</small></span>
+        </a>
+        <div class="nh-staff__workspace"><small>VOTRE ÉTABLISSEMENT</small><strong>Clinique NovaHospito</strong></div>
+        <div class="nh-staff__caption">ADMINISTRATION</div>
+        <nav class="nh-staff__nav" aria-label="Navigation clinique">
+            <a class="is-active" href="#overview"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Vue globale</span></a>
+            <a href="#patients"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21v-2a7 7 0 0 1 14 0v2M17 4.5a4 4 0 0 1 0 7.5M19 15a5 5 0 0 1 3 4.5V21"/></svg><span>Patients</span></a>
+            <a href="#medecins"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v5a6 6 0 0 0 12 0V3M4 3h4M16 3h4M12 14v3a4 4 0 0 0 8 0v-1"/><circle cx="20" cy="14" r="1"/></svg><span>Médecins</span></a>
+            <a href="#planning"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 9h18M8 13h3M8 17h7"/></svg><span>Planning</span></a>
+            <a href="#facturation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h4"/></svg><span>Facturation</span></a>
+            <a href="#stocks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg><span>Stocks</span></a>
+        </nav>
+        <div class="nh-staff__sidebar-spacer"></div>
+        <div class="nh-staff__support"><span class="nh-staff__support-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"/><path d="M8 12h8m-4-4v8"/></svg></span><strong>Besoin d’aide ?</strong><p>Les modules sont présentés en prototype visuel.</p></div>
+        <a class="nh-staff__logout" href="{% url 'deconnexion' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>Se déconnecter</a>
+        <div class="nh-staff__profile">
+            <span class="nh-staff__avatar">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span>
+            <span class="nh-staff__profile-copy"><strong>{{ user.get_full_name|default:user.username }}</strong><small>Administration</small></span>
+        </div>
+    </aside>
+
+    <div class="nh-staff__main">
+        <header class="nh-staff__topbar"><p>NovaHospito <span>/</span> Espace clinique</p><div class="nh-staff__top-profile"><span class="nh-staff__secure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Espace sécurisé</span><span class="nh-staff__avatar nh-staff__avatar--top">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span><span class="nh-staff__top-name"><strong>{{ user.get_full_name|default:user.username }}</strong><small>Administration</small></span></div></header>
+
+        <main class="nh-staff__content">
+            <section class="nh-staff__hero"><div><span class="nh-staff__eyebrow">VUE D’ENSEMBLE CLINIQUE</span><h1>Bonjour, {{ user.first_name|default:user.username }}</h1><p>Un aperçu de l’activité de votre établissement.</p></div><span class="nh-staff__demo-badge"><i></i> Données de démonstration</span></section>
+
+            <section class="nh-staff__metrics nh-clinic__metrics" aria-label="Indicateurs de démonstration">
+                <article><span class="nh-staff__metric-icon blue"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21v-2a7 7 0 0 1 14 0v2M18 8h4m-2-2v4"/></svg></span><small>PATIENTS</small><strong>1 284</strong><span>Exemple de la maquette</span></article>
+                <article><span class="nh-staff__metric-icon green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v5a6 6 0 0 0 12 0V3M4 3h4M16 3h4M12 14v3a4 4 0 0 0 8 0v-1"/><circle cx="20" cy="14" r="1"/></svg></span><small>MÉDECINS</small><strong>24</strong><span>Effectif illustratif</span></article>
+                <article><span class="nh-staff__metric-icon violet"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 9h18"/></svg></span><small>RENDEZ-VOUS DU JOUR</small><strong>86</strong><span>Compteur fictif de démonstration</span></article>
+                <article><span class="nh-staff__metric-icon amber"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18M7 14l4-4 3 3 6-7"/></svg></span><small>RECETTES DU MOIS</small><strong>8,45 M</strong><span>FCFA · valeur fictive</span></article>
+            </section>
+
+            <section class="nh-staff__card" id="planning" aria-labelledby="nh-clinic-planning-title">
+                <div class="nh-staff__card-head"><div><span class="nh-staff__kicker">ORGANISATION DES SOINS</span><h2 id="nh-clinic-planning-title">Planning du jour</h2><p>Exemples fictifs issus de la maquette.</p></div><span class="nh-staff__count">Jeudi 27 août 2026</span></div>
+                <div class="nh-staff__table-wrap"><table><thead><tr><th>Heure</th><th>Patient</th><th>Médecin</th><th>Service</th><th>Statut</th></tr></thead><tbody>
+                    <tr><td>09:00</td><td>Esther Mbala</td><td>Dr. Kamdem Aline</td><td>Cardiologie</td><td><span class="nh-staff__status done">Terminé</span></td></tr>
+                    <tr><td>10:30</td><td>Paul Nguema</td><td>Dr. Kamdem Aline</td><td>Cardiologie</td><td><span class="nh-staff__status ongoing">En cours</span></td></tr>
+                    <tr><td>11:15</td><td>Naomie Fotso</td><td>Dr. Mbarga Elise</td><td>Médecine générale</td><td><span class="nh-staff__status upcoming">À venir</span></td></tr>
+                </tbody></table></div>
+            </section>
+
+            <div class="nh-clinic__grid">
+                <section class="nh-staff__card" id="patients" aria-labelledby="nh-clinic-patients-title">
+                    <div class="nh-staff__card-head"><div><span class="nh-staff__kicker">GESTION DES DOSSIERS</span><h2 id="nh-clinic-patients-title">Patients récents</h2><p>Données fictives, à relier à votre base.</p></div><span class="nh-staff__count">Exemple</span></div>
+                    <div class="nh-staff__table-wrap"><table><thead><tr><th>Patient</th><th>Dernière visite</th><th>Service</th></tr></thead><tbody>
+                        <tr><td><span class="nh-staff__table-person"><i>EM</i><strong>Esther Mbala</strong></span></td><td>27 août 2026</td><td>Cardiologie</td></tr>
+                        <tr><td><span class="nh-staff__table-person"><i class="teal">PN</i><strong>Paul Nguema</strong></span></td><td>26 août 2026</td><td>Général</td></tr>
+                        <tr><td><span class="nh-staff__table-person"><i class="violet">NF</i><strong>Naomie Fotso</strong></span></td><td>25 août 2026</td><td>Cardiologie</td></tr>
+                    </tbody></table></div>
+                </section>
+
+                <section class="nh-staff__card" id="medecins" aria-labelledby="nh-clinic-doctors-title">
+                    <div class="nh-staff__card-head"><div><span class="nh-staff__kicker">ÉQUIPE MÉDICALE</span><h2 id="nh-clinic-doctors-title">Médecins</h2><p>Équipe exemple de la maquette.</p></div><span class="nh-staff__count">24 au total</span></div>
+                    <div class="nh-clinic__doctor-list">
+                        <div><i>KA</i><span><strong>Dr. Kamdem Aline</strong><small>Cardiologie</small></span><b class="is-online">Disponible</b></div>
+                        <div><i class="teal">ME</i><span><strong>Dr. Mbarga Elise</strong><small>Médecine générale</small></span><b class="is-busy">En consultation</b></div>
+                        <div><i class="violet">SN</i><span><strong>Dr. Simo Nadège</strong><small>Pédiatrie</small></span><b class="is-online">Disponible</b></div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="nh-clinic__grid">
+                <section class="nh-staff__card" id="facturation" aria-labelledby="nh-clinic-billing-title">
+                    <div class="nh-staff__card-head"><div><span class="nh-staff__kicker">SUIVI FINANCIER</span><h2 id="nh-clinic-billing-title">Factures récentes</h2><p>Exemples de présentation uniquement.</p></div></div>
+                    <div class="nh-staff__table-wrap"><table><thead><tr><th>Référence</th><th>Patient</th><th>Montant</th><th>Statut</th></tr></thead><tbody>
+                        <tr><td>#FAC-1048</td><td>Esther Mbala</td><td>25 000 FCFA</td><td><span class="nh-staff__status upcoming">En attente</span></td></tr>
+                        <tr><td>#FAC-1047</td><td>Paul Nguema</td><td>18 500 FCFA</td><td><span class="nh-staff__status done">Réglée</span></td></tr>
+                        <tr><td>#FAC-1046</td><td>Naomie Fotso</td><td>32 000 FCFA</td><td><span class="nh-staff__status upcoming">En attente</span></td></tr>
+                    </tbody></table></div>
+                    <button class="nh-staff__disabled-button" type="button" disabled>Facturation à raccorder</button>
+                </section>
+
+                <section class="nh-staff__card" id="stocks" aria-labelledby="nh-clinic-stock-title">
+                    <div class="nh-staff__card-head"><div><span class="nh-staff__kicker">GESTION DES FOURNITURES</span><h2 id="nh-clinic-stock-title">Stocks de médicaments</h2><p>Inventaire illustratif, sans stock réel.</p></div></div>
+                    <div class="nh-clinic__stock-list">
+                        <div><span><i class="stock-blue"></i><strong>Paracétamol 500 mg</strong></span><b>Stock normal</b></div>
+                        <div><span><i class="stock-green"></i><strong>Amoxicilline 500 mg</strong></span><b>Stock normal</b></div>
+                        <div><span><i class="stock-amber"></i><strong>Gants d’examen</strong></span><b class="low">Stock bas</b></div>
+                        <div><span><i class="stock-red"></i><strong>Seringues 5 ml</strong></span><b class="low">À réapprovisionner</b></div>
+                    </div>
+                    <button class="nh-staff__disabled-button" type="button" disabled>Gestion de stock à raccorder</button>
+                </section>
+            </div>
+
+            <footer class="nh-staff__footer"><span>NovaHospito · Espace sécurisé</span><span>Prototype visuel · Toutes les données de cet espace sont fictives</span></footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

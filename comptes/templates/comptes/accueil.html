@@ -1,117 +1,113 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}NovaHospito — Créer un compte{% endblock %}
+
+{% block title %}NovaHospito — Connexion{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/connexion.css' %}?v=20261015-typo-renforcee">
+{% endblock %}
 
 {% block content %}
-  <header class="w-full bg-white border-b border-slate-100 sticky top-0 z-40">
-    <div class="w-full flex items-center justify-between px-6 py-4 gap-6">
-      <div class="flex items-center gap-3 flex-shrink-0">
-        <img src="{% static 'img/logo.png' %}" class="w-11 h-11" alt="NovaHospito"/>
-        <div>
-          <div class="brand-font font-bold text-lg leading-none text-nh-blue">NovaHospito</div>
-          <div class="text-[11px] text-slate-400 tracking-wide">Votre santé, connectée</div>
-        </div>
-      </div>
-      <nav class="hidden md:flex items-center gap-10 text-sm font-semibold text-slate-600 mx-auto">
-        <a href="{% url 'accueil' %}" class="pub-link">Accueil</a>
-        <a href="#" class="pub-link">Menu</a>
-        <a href="#" class="pub-link">À propos</a>
-      </nav>
-      <div class="flex items-center flex-shrink-0">
-        <label class="input input-bordered input-sm flex items-center gap-2 rounded-full w-44 md:w-56">
-          <input type="text" class="grow text-sm" placeholder="Rechercher..."/>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
-          </svg>
-        </label>
-      </div>
-    </div>
-  </header>
+<main class="nh-auth">
+    <section class="nh-auth__hero" aria-labelledby="nh-auth-title">
+        <div class="nh-auth__glow nh-auth__glow--top" aria-hidden="true"></div>
+        <div class="nh-auth__glow nh-auth__glow--bottom" aria-hidden="true"></div>
 
-  <div class="flex items-center justify-center bg-nh-blue-light px-4 py-10">
-    <div class="card-nh w-full max-w-lg p-8">
-      <div class="flex flex-col items-center mb-6">
-        <img src="{% static 'img/logo.png' %}" class="w-16 h-16 mb-2" alt="NovaHospito"/>
-        <div class="brand-font font-bold text-xl text-nh-blue">Créer un compte patient</div>
-        <div class="text-xs text-slate-400">Accédez à vos rendez-vous, votre dossier médical et plus</div>
-      </div>
+        <a class="nh-auth__brand" href="{% url 'accueil' %}" aria-label="NovaHospito, accueil">
+            <img class="nh-auth__brand-image" src="{% static 'img/auth/novahospito-logo-transparent.png' %}" alt="NovaHospito — Groupe hospitalier" width="1800" height="579">
+        </a>
 
-      <form method="post" action="{% url 'inscription' %}">
-        {% csrf_token %}
+        <div class="nh-auth__intro">
+            <p class="nh-auth__eyebrow"><span></span> Plateforme hospitalière</p>
+            <h1 id="nh-auth-title">Votre santé,<br>simplement<br>connectée.</h1>
+            <p class="nh-auth__description">
+                Rendez-vous en ligne, dossier médical centralisé, téléconsultation
+                et suivi administratif : tout au même endroit.
+            </p>
 
-        <div class="grid grid-cols-2 gap-3 mb-3">
-          <div class="form-control">
-            <label class="label text-sm font-medium text-slate-600">Prénom</label>
-            {{ form.first_name }}
-            {% if form.first_name.errors %}<p class="text-red-500 text-xs mt-1">{{ form.first_name.errors.0 }}</p>{% endif %}
-          </div>
-          <div class="form-control">
-            <label class="label text-sm font-medium text-slate-600">Nom</label>
-            {{ form.last_name }}
-            {% if form.last_name.errors %}<p class="text-red-500 text-xs mt-1">{{ form.last_name.errors.0 }}</p>{% endif %}
-          </div>
+            <div class="nh-auth__stats" aria-label="NovaHospito en chiffres">
+                <div class="nh-auth__stat"><strong>12+</strong><span>Médecins partenaires</span></div>
+                <div class="nh-auth__stat"><strong>1 200+</strong><span>Patients suivis</span></div>
+                <div class="nh-auth__stat"><strong>24/7</strong><span>Votre espace santé</span></div>
+            </div>
         </div>
 
-        <div class="form-control mb-3">
-          <label class="label text-sm font-medium text-slate-600">Nom d'utilisateur</label>
-          {{ form.username }}
-          {% if form.username.errors %}<p class="text-red-500 text-xs mt-1">{{ form.username.errors.0 }}</p>{% endif %}
+        <figure class="nh-auth__hero-image">
+            <img src="{% static 'img/auth/connexion-soins.png' %}" alt="Une professionnelle de santé accompagne une patiente âgée à l’aide d’une tablette.">
+        </figure>
+
+        <p class="nh-auth__hero-foot">Une équipe de soins, connectée autour de vous.</p>
+    </section>
+
+    <section class="nh-auth__panel" aria-labelledby="nh-signin-title">
+        <div class="nh-auth__form-wrap">
+            <p class="nh-auth__section-label">Votre espace santé</p>
+            <h2 id="nh-signin-title">Connexion</h2>
+            <p class="nh-auth__lead">Accédez à votre espace NovaHospito.</p>
+
+            {% if messages %}
+                <div class="nh-auth__messages" aria-live="polite">
+                    {% for message in messages %}
+                        <p class="nh-auth__message {{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if form.non_field_errors %}
+                <div class="nh-auth__message error" role="alert">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <form class="nh-auth__form" method="post" action="{% url 'accueil' %}">
+                {% csrf_token %}
+
+                <div class="nh-auth__field">
+                    <label for="{{ form.email.id_for_label }}">Adresse e-mail</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <p class="nh-auth__field-error" role="alert">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="nh-auth__field">
+                    <label for="{{ form.password.id_for_label }}">Mot de passe</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <p class="nh-auth__field-error" role="alert">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="nh-auth__forgot">
+                    <a href="#">Mot de passe oublié ?</a>
+                </div>
+
+                <button class="nh-auth__submit" type="submit">
+                    Se connecter
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </form>
+
+            <p class="nh-auth__signup">
+                Nouveau sur NovaHospito ?
+                <a href="{% url 'inscription' %}">Créer un compte patient</a>
+            </p>
+
+            <div class="nh-auth__staff">
+                <span>Personnel clinique ?</span>
+                <a href="{% url 'medecin' %}">Espace médecin</a>
+                <span aria-hidden="true">·</span>
+                <a href="{% url 'admin' %}">Espace clinique</a>
+            </div>
+
+            <p class="nh-auth__security">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                    <path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Connexion sécurisée · NovaHospito
+            </p>
         </div>
-
-        <div class="form-control mb-3">
-          <label class="label text-sm font-medium text-slate-600">Adresse email</label>
-          {{ form.email }}
-          {% if form.email.errors %}<p class="text-red-500 text-xs mt-1">{{ form.email.errors.0 }}</p>{% endif %}
-        </div>
-
-        <div class="grid grid-cols-2 gap-3 mb-3">
-          <div class="form-control">
-            <label class="label text-sm font-medium text-slate-600">Date de naissance</label>
-            {{ form.date_naissance }}
-            {% if form.date_naissance.errors %}<p class="text-red-500 text-xs mt-1">{{ form.date_naissance.errors.0 }}</p>{% endif %}
-          </div>
-          <div class="form-control">
-            <label class="label text-sm font-medium text-slate-600">Téléphone</label>
-            {{ form.num_tel }}
-            {% if form.num_tel.errors %}<p class="text-red-500 text-xs mt-1">{{ form.num_tel.errors.0 }}</p>{% endif %}
-          </div>
-        </div>
-
-        <div class="form-control mb-3">
-          <label class="label text-sm font-medium text-slate-600">Adresse</label>
-          {{ form.adresse }}
-          {% if form.adresse.errors %}<p class="text-red-500 text-xs mt-1">{{ form.adresse.errors.0 }}</p>{% endif %}
-        </div>
-
-        <div class="grid grid-cols-2 gap-3 mb-5">
-          <div class="form-control">
-            <label class="label text-sm font-medium text-slate-600">Mot de passe</label>
-            {{ form.password1 }}
-            {% if form.password1.errors %}<p class="text-red-500 text-xs mt-1">{{ form.password1.errors.0 }}</p>{% endif %}
-          </div>
-          <div class="form-control">
-            <label class="label text-sm font-medium text-slate-600">Confirmer</label>
-            {{ form.password2 }}
-            {% if form.password2.errors %}<p class="text-red-500 text-xs mt-1">{{ form.password2.errors.0 }}</p>{% endif %}
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-nh w-full rounded-full mb-4">Créer mon compte</button>
-      </form>
-
-      <div class="text-center text-xs text-slate-400">
-        Déjà inscrit ? <a href="{% url 'accueil' %}" class="text-nh-blue font-medium">Se connecter</a>
-      </div>
-    </div>
-  </div>
-
-  <footer class="bg-slate-900 text-slate-400 text-sm py-8">
-    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <img src="{% static 'img/logo.png' %}" class="w-7 h-7"/>
-        <span class="text-white font-semibold brand-font">NovaHospito</span>
-      </div>
-      <span>© 2026 NovaHospito — Plateforme hospitalière</span>
-    </div>
-  </footer>
+    </section>
+</main>
 {% endblock %}

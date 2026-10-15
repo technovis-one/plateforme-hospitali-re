@@ -1,0 +1,884 @@
+:root {
+    --nh-staff-navy: #141b2e;
+    --nh-staff-navy-soft: #1c2748;
+    --nh-staff-blue: #4a5fe8;
+    --nh-staff-blue-dark: #3b4ed0;
+    --nh-staff-blue-pale: #eaefff;
+    --nh-staff-teal: #138b8d;
+    --nh-staff-teal-pale: #e4f6f4;
+    --nh-staff-green: #1a8d56;
+    --nh-staff-green-pale: #e8f6ed;
+    --nh-staff-amber: #a86b08;
+    --nh-staff-amber-pale: #fff3db;
+    --nh-staff-red: #b73543;
+    --nh-staff-red-pale: #fdecee;
+    --nh-staff-ink: #17203a;
+    --nh-staff-muted: #8992a9;
+    --nh-staff-border: #e7eaf3;
+    --nh-staff-bg: #f4f6fb;
+    --nh-staff-violet: #7652b5;
+    --nh-staff-violet-pale: #f1ebfb;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: var(--nh-staff-bg);
+}
+
+.nh-staff,
+.nh-staff * {
+    box-sizing: border-box;
+}
+
+.nh-staff {
+    display: flex;
+    min-height: 100vh;
+    color: var(--nh-staff-ink);
+    background: var(--nh-staff-bg);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 14px;
+}
+
+.nh-staff a {
+    color: inherit;
+}
+
+.nh-staff__sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    width: 248px;
+    min-width: 248px;
+    height: 100vh;
+    flex-direction: column;
+    padding: 22px 14px 16px;
+    background: var(--nh-staff-navy);
+    color: #fff;
+}
+
+.nh-staff__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 6px;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.nh-staff__brand img {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    object-fit: contain;
+}
+
+.nh-staff__brand > span {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 750;
+    letter-spacing: -.025em;
+}
+
+.nh-staff__brand > span > span {
+    color: #aebcff;
+}
+
+.nh-staff__brand small {
+    margin-top: 4px;
+    color: #8994b3;
+    font-size: 8px;
+    font-weight: 650;
+    letter-spacing: .1em;
+}
+
+.nh-staff__workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 24px 0 23px;
+    padding: 12px;
+    border: 1px solid rgb(255 255 255 / 9%);
+    border-radius: 11px;
+    background: rgb(255 255 255 / 3%);
+}
+
+.nh-staff__workspace small,
+.nh-staff__caption {
+    color: #7d88aa;
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: .1em;
+}
+
+.nh-staff__workspace strong {
+    color: #e8ecfa;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.nh-staff__caption {
+    margin: 0 8px 9px;
+}
+
+.nh-staff__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nh-staff__nav a,
+.nh-staff__logout {
+    display: flex;
+    min-height: 42px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 11px;
+    border-radius: 9px;
+    color: #b7bfd8;
+    font-size: 11.5px;
+    font-weight: 550;
+    text-decoration: none;
+    transition: color 140ms ease, background 140ms ease;
+}
+
+.nh-staff__nav a:hover,
+.nh-staff__logout:hover {
+    background: rgb(255 255 255 / 7%);
+    color: #fff;
+}
+
+.nh-staff__nav a.is-active {
+    background: var(--nh-staff-blue);
+    color: #fff;
+    font-weight: 680;
+}
+
+.nh-staff__nav svg,
+.nh-staff__logout svg {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.65;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nh-staff__sidebar-spacer {
+    flex: 1;
+    min-height: 18px;
+}
+
+.nh-staff__support {
+    margin: 0 0 12px;
+    padding: 12px;
+    border: 1px solid rgb(255 255 255 / 8%);
+    border-radius: 12px;
+    background: rgb(255 255 255 / 4%);
+}
+
+.nh-staff__support-icon {
+    display: grid;
+    width: 29px;
+    height: 29px;
+    margin-bottom: 8px;
+    place-items: center;
+    border-radius: 9px;
+    background: var(--nh-staff-blue);
+    color: #fff;
+}
+
+.nh-staff__support-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nh-staff__support strong {
+    color: #f6f7fc;
+    font-size: 11px;
+}
+
+.nh-staff__support p {
+    margin: 5px 0 0;
+    color: #aeb7d0;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.nh-staff__logout {
+    min-height: 37px;
+    margin-bottom: 10px;
+    border-top: 1px solid rgb(255 255 255 / 8%);
+    border-radius: 0;
+    color: #aeb7d0;
+    font-size: 10.5px;
+}
+
+.nh-staff__logout svg {
+    width: 15px;
+    height: 15px;
+}
+
+.nh-staff__profile {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 4px 0;
+    border-top: 1px solid rgb(255 255 255 / 9%);
+}
+
+.nh-staff__avatar,
+.nh-staff__patient-avatar,
+.nh-staff__table-person i {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--nh-staff-blue-pale);
+    color: var(--nh-staff-blue);
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 750;
+}
+
+.nh-staff__avatar {
+    width: 32px;
+    height: 32px;
+}
+
+.nh-staff__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nh-staff__profile-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.nh-staff__profile-copy strong {
+    overflow: hidden;
+    color: #f5f6fb;
+    font-size: 10.5px;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nh-staff__profile-copy small {
+    overflow: hidden;
+    color: #8994b3;
+    font-size: 9.5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nh-staff__main {
+    min-width: 0;
+    flex: 1;
+}
+
+.nh-staff__topbar {
+    position: sticky;
+    z-index: 5;
+    top: 0;
+    display: flex;
+    min-height: 62px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 9px clamp(18px, 3vw, 36px);
+    border-bottom: 1px solid var(--nh-staff-border);
+    background: rgb(255 255 255 / 94%);
+    backdrop-filter: blur(12px);
+}
+
+.nh-staff__topbar > p {
+    margin: 0;
+    color: var(--nh-staff-muted);
+    font-size: 11px;
+}
+
+.nh-staff__topbar > p span {
+    padding: 0 7px;
+    color: #bcc3d1;
+}
+
+.nh-staff__top-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nh-staff__secure {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #74809b;
+    font-size: 9.5px;
+}
+
+.nh-staff__secure svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: var(--nh-staff-green);
+    stroke-width: 1.65;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nh-staff__avatar--top {
+    width: 33px;
+    height: 33px;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px var(--nh-staff-border);
+}
+
+.nh-staff__top-name {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.nh-staff__top-name strong {
+    color: #29324a;
+    font-size: 10.5px;
+    font-weight: 680;
+}
+
+.nh-staff__top-name small {
+    color: var(--nh-staff-muted);
+    font-size: 9px;
+}
+
+.nh-staff__content {
+    width: min(100%, 1500px);
+    margin: 0 auto;
+    padding: 23px clamp(18px, 3vw, 36px) 25px;
+}
+
+.nh-staff__hero {
+    display: flex;
+    min-height: 96px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 17px 21px;
+    border-radius: 14px;
+    background: linear-gradient(115deg, var(--nh-staff-navy), var(--nh-staff-navy-soft));
+    color: white;
+}
+
+.nh-staff__eyebrow,
+.nh-staff__kicker {
+    margin: 0 0 5px;
+    color: #abbaff;
+    font-size: 8.5px;
+    font-weight: 750;
+    letter-spacing: .11em;
+}
+
+.nh-staff__hero h1 {
+    margin: 0 0 4px;
+    color: white;
+    font-size: clamp(20px, 2.1vw, 26px);
+    font-weight: 740;
+    letter-spacing: -.04em;
+}
+
+.nh-staff__hero p:last-child {
+    margin: 0;
+    color: #bdc6dc;
+    font-size: 11px;
+}
+
+.nh-staff__demo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 9px;
+    border: 1px solid rgb(255 255 255 / 15%);
+    border-radius: 999px;
+    color: #e2e7f7;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.nh-staff__demo-badge i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #aebcff;
+}
+
+.nh-staff__metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.nh-staff__metrics article {
+    display: grid;
+    min-height: 116px;
+    grid-template-columns: 35px minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    align-content: center;
+    column-gap: 11px;
+    padding: 14px;
+    border: 1px solid var(--nh-staff-border);
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 3px 12px rgb(26 39 70 / 3%);
+}
+
+.nh-staff__metric-icon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    grid-row: 1 / span 3;
+    place-items: center;
+    border-radius: 10px;
+}
+
+.nh-staff__metric-icon svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nh-staff__metric-icon.blue { background: var(--nh-staff-blue-pale); color: var(--nh-staff-blue); }
+.nh-staff__metric-icon.green { background: var(--nh-staff-green-pale); color: var(--nh-staff-green); }
+.nh-staff__metric-icon.violet { background: var(--nh-staff-violet-pale); color: var(--nh-staff-violet); }
+
+.nh-staff__metrics article small {
+    color: var(--nh-staff-muted);
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: .055em;
+}
+
+.nh-staff__metrics article strong {
+    margin-top: 3px;
+    color: var(--nh-staff-ink);
+    font-size: 22px;
+    line-height: 1;
+}
+
+.nh-staff__metrics article > span:last-child {
+    margin-top: 4px;
+    color: var(--nh-staff-muted);
+    font-size: 9px;
+}
+
+.nh-staff__card {
+    margin-bottom: 14px;
+    padding: 17px 18px 10px;
+    border: 1px solid var(--nh-staff-border);
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 3px 12px rgb(26 39 70 / 3%);
+    scroll-margin-top: 75px;
+}
+
+.nh-staff__card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.nh-staff__card-head .nh-staff__kicker {
+    color: var(--nh-staff-blue);
+}
+
+.nh-staff__card-head h2 {
+    margin: 0;
+    color: var(--nh-staff-ink);
+    font-size: 15px;
+    font-weight: 740;
+    letter-spacing: -.02em;
+}
+
+.nh-staff__card-head p:last-child {
+    margin: 4px 0 0;
+    color: var(--nh-staff-muted);
+    font-size: 10px;
+    line-height: 1.45;
+}
+
+.nh-staff__subtle-link {
+    color: var(--nh-staff-blue-dark) !important;
+    font-size: 10px;
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.nh-staff__subtle-link span {
+    margin-left: 4px;
+}
+
+.nh-staff__schedule {
+    border-top: 1px solid #f0f2f7;
+}
+
+.nh-staff__appointment {
+    position: relative;
+    display: grid;
+    grid-template-columns: 44px 10px 33px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 9px;
+    min-height: 62px;
+    border-bottom: 1px solid #f0f2f7;
+}
+
+.nh-staff__appointment:last-child {
+    border-bottom: 0;
+}
+
+.nh-staff__appointment time {
+    color: #47536d;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.nh-staff__timeline-dot {
+    width: 8px;
+    height: 8px;
+    border: 2px solid #c8cedd;
+    border-radius: 50%;
+    background: white;
+}
+
+.nh-staff__timeline-dot.done { border-color: var(--nh-staff-green); background: var(--nh-staff-green); }
+.nh-staff__timeline-dot.active { border-color: var(--nh-staff-blue); background: var(--nh-staff-blue); box-shadow: 0 0 0 3px var(--nh-staff-blue-pale); }
+
+.nh-staff__patient-avatar {
+    width: 31px;
+    height: 31px;
+    background: var(--nh-staff-blue-pale);
+    font-size: 9px;
+}
+
+.nh-staff__patient-avatar.teal,
+.nh-staff__table-person i.teal { background: var(--nh-staff-teal-pale); color: var(--nh-staff-teal); }
+.nh-staff__patient-avatar.violet,
+.nh-staff__table-person i.violet { background: var(--nh-staff-violet-pale); color: var(--nh-staff-violet); }
+.nh-staff__patient-avatar.amber,
+.nh-staff__table-person i.amber { background: var(--nh-staff-amber-pale); color: var(--nh-staff-amber); }
+
+.nh-staff__appointment-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nh-staff__appointment-copy strong {
+    overflow: hidden;
+    color: #29324a;
+    font-size: 10.5px;
+    font-weight: 680;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nh-staff__appointment-copy span {
+    overflow: hidden;
+    color: var(--nh-staff-muted);
+    font-size: 9.5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nh-staff__status {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 8.5px;
+    font-weight: 680;
+    white-space: nowrap;
+}
+
+.nh-staff__status.done { background: var(--nh-staff-green-pale); color: var(--nh-staff-green); }
+.nh-staff__status.upcoming { background: var(--nh-staff-blue-pale); color: var(--nh-staff-blue-dark); }
+.nh-staff__status.ongoing { background: var(--nh-staff-teal-pale); color: var(--nh-staff-teal); }
+.nh-staff__status.cancelled { background: var(--nh-staff-red-pale); color: var(--nh-staff-red); }
+
+.nh-staff__action-link {
+    padding: 6px 10px;
+    border-radius: 7px;
+    background: var(--nh-staff-blue);
+    color: white !important;
+    font-size: 9px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nh-staff__action-link:hover { background: var(--nh-staff-blue-dark); }
+
+.nh-staff__count {
+    padding: 5px 8px;
+    border-radius: 999px;
+    background: #f1f3f9;
+    color: #707b93;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.nh-staff__table-wrap {
+    overflow-x: auto;
+    border-top: 1px solid #f0f2f7;
+}
+
+.nh-staff__table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.nh-staff__table-wrap th {
+    padding: 10px 8px;
+    color: var(--nh-staff-muted);
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.nh-staff__table-wrap td {
+    padding: 10px 8px;
+    border-top: 1px solid #f2f3f7;
+    color: #78839a;
+    font-size: 9.5px;
+    white-space: nowrap;
+}
+
+.nh-staff__table-person {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.nh-staff__table-person i {
+    width: 25px;
+    height: 25px;
+    font-size: 8px;
+}
+
+.nh-staff__table-person strong {
+    color: #303a53;
+    font-size: 9.5px;
+    font-weight: 650;
+}
+
+.nh-staff__patient-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0 13px;
+    padding: 11px;
+    border: 1px solid var(--nh-staff-border);
+    border-radius: 10px;
+    background: #fafbfe;
+}
+
+.nh-staff__patient-summary > div {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.nh-staff__patient-summary > div strong { color: #303a53; font-size: 11px; }
+.nh-staff__patient-summary > div span { color: var(--nh-staff-muted); font-size: 9px; }
+
+.nh-staff__clinical-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    margin-bottom: 12px;
+}
+
+.nh-staff__clinical-grid article {
+    display: flex;
+    min-height: 56px;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    border: 1px solid #eef0f6;
+    border-radius: 9px;
+}
+
+.nh-staff__clinical-grid small {
+    color: var(--nh-staff-muted);
+    font-size: 7.5px;
+    font-weight: 750;
+    letter-spacing: .06em;
+}
+
+.nh-staff__clinical-grid strong {
+    color: #35405a;
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.nh-staff__demo-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: #525e77;
+    font-size: 9.5px;
+    font-weight: 650;
+}
+
+.nh-staff__demo-field textarea {
+    width: 100%;
+    min-height: 63px;
+    resize: vertical;
+    padding: 9px;
+    border: 1px solid var(--nh-staff-border);
+    border-radius: 8px;
+    background: #f9faff;
+    color: var(--nh-staff-muted);
+    font: inherit;
+    font-size: 9px;
+}
+
+.nh-staff__disabled-button {
+    min-height: 33px;
+    margin-top: 9px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 8px;
+    background: #e9ecf4;
+    color: #929bb0;
+    font: inherit;
+    font-size: 9px;
+    font-weight: 650;
+}
+
+.nh-staff__teleconsult {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 0 0 14px;
+    padding: 13px 15px;
+    border: 1px solid #e3e7f4;
+    border-radius: 11px;
+    background: linear-gradient(100deg, #fff, #f8f9ff);
+    scroll-margin-top: 75px;
+}
+
+.nh-staff__teleconsult-icon {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 9px;
+    background: var(--nh-staff-blue-pale);
+    color: var(--nh-staff-blue);
+}
+
+.nh-staff__teleconsult-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nh-staff__teleconsult > div {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nh-staff__teleconsult > div strong { color: #303a53; font-size: 10px; }
+.nh-staff__teleconsult > div span { color: var(--nh-staff-muted); font-size: 9px; line-height: 1.4; }
+
+.nh-staff__footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 11px;
+    border-top: 1px solid #e8ebf3;
+    color: var(--nh-staff-muted);
+    font-size: 9px;
+}
+
+.nh-staff a:focus-visible {
+    outline: 3px solid rgb(74 95 232 / 45%);
+    outline-offset: 3px;
+}
+
+@media (max-width: 1100px) {
+    .nh-staff__sidebar { width: 218px; min-width: 218px; }
+    .nh-staff__metrics { gap: 8px; }
+    .nh-staff__metrics article { grid-template-columns: 30px minmax(0,1fr); column-gap: 7px; padding: 11px; }
+    .nh-staff__metric-icon { width: 29px; height: 29px; }
+}
+
+@media (max-width: 760px) {
+    .nh-staff { display: block; padding-bottom: 65px; }
+    .nh-staff__sidebar { position: fixed; z-index: 20; top: auto; right: 0; bottom: 0; left: 0; width: auto; min-width: 0; height: auto; padding: 6px 6px max(6px, env(safe-area-inset-bottom)); border-top: 1px solid rgb(255 255 255 / 10%); box-shadow: 0 -6px 22px rgb(18 27 50 / 18%); }
+    .nh-staff__brand, .nh-staff__workspace, .nh-staff__caption, .nh-staff__sidebar-spacer, .nh-staff__support, .nh-staff__logout, .nh-staff__profile { display: none; }
+    .nh-staff__nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
+    .nh-staff__nav a { min-height: 50px; flex-direction: column; justify-content: center; gap: 4px; padding: 4px 2px; border-radius: 8px; font-size: 8px; text-align: center; }
+    .nh-staff__nav svg { width: 18px; height: 18px; }
+    .nh-staff__topbar { min-height: 57px; padding: 8px 14px; }
+    .nh-staff__secure { display: none; }
+    .nh-staff__content { padding: 15px 13px 22px; }
+    .nh-staff__hero { align-items: flex-start; flex-direction: column; gap: 10px; padding: 16px; }
+    .nh-staff__metrics { grid-template-columns: 1fr; gap: 8px; }
+    .nh-staff__metrics article { min-height: 84px; grid-template-columns: 34px minmax(0,1fr); padding: 10px 13px; }
+    .nh-staff__metric-icon { width: 32px; height: 32px; }
+    .nh-staff__appointment { grid-template-columns: 40px 8px 30px minmax(0,1fr) auto; gap: 6px; }
+    .nh-staff__status { font-size: 8px; }
+    .nh-staff__card { padding: 14px 12px 8px; }
+    .nh-staff__footer { flex-direction: column; gap: 5px; }
+}
+
+@media (max-width: 440px) {
+    .nh-staff__top-name { display: none; }
+    .nh-staff__appointment { grid-template-columns: 37px 8px 28px minmax(0,1fr); gap: 6px; padding: 7px 0; }
+    .nh-staff__appointment .nh-staff__status, .nh-staff__appointment .nh-staff__action-link { grid-column: 4; justify-self: start; }
+    .nh-staff__table-wrap th, .nh-staff__table-wrap td { padding-right: 6px; padding-left: 6px; }
+    .nh-staff__clinical-grid { grid-template-columns: 1fr; }
+    .nh-staff__teleconsult { align-items: flex-start; flex-wrap: wrap; }
+    .nh-staff__teleconsult .nh-staff__status { margin-left: 43px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nh-staff *, .nh-staff *::before, .nh-staff *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}

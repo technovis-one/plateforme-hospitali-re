@@ -1,0 +1,19 @@
+/* Logo NovaHospito horizontal pour les barres latérales Patient et Médecin. */
+.nh-patient__brand .nh-sidebar-brand-logo,
+.nh-staff__brand .nh-sidebar-brand-logo {
+    display: block;
+    width: min(100%, 212px);
+    max-width: 100%;
+    max-height: 72px;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.nh-patient__brand,
+.nh-staff__brand {
+    min-width: 0;
+}

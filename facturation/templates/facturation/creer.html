@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#141b2e">
+    <title>NovaHospito — Nouvelle facture</title>
+    <link rel="stylesheet" href="{% static 'css/patient.css' %}">
+    <link rel="stylesheet" href="{% static 'css/patient-lisibilite.css' %}?v=20261008-facturation-1">
+    <link rel="stylesheet" href="{% static 'css/facturation.css' %}?v=20261008-1">
+    <link rel="stylesheet" href="{% static 'css/step8-modules.css' %}?v=20261008-1">
+    <link rel="stylesheet" href="{% static 'css/patient-navigation.css' %}?v=20261010-1">
+</head>
+<body>
+<div class="nh-patient nh-invoices">
+    <aside class="nh-patient__sidebar">
+        <a class="nh-patient__brand" href="{% url 'admin' %}" aria-label="NovaHospito — espace clinique"><img src="{% static 'img/logo.png' %}" alt="" width="38" height="38"><span>Nova<span>Hospito</span><small>GESTION HOSPITALIÈRE</small></span></a>
+        <div class="nh-patient__workspace"><span>VOTRE ESPACE</span><strong>Administration</strong></div>
+        <p class="nh-patient__nav-label">MENU PRINCIPAL</p>
+        <nav class="nh-patient__nav" aria-label="Navigation administration"><a href="{% url 'admin' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Vue clinique</span></a><a class="is-active" href="{% url 'facturation:historique' %}" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h4"/></svg><span>Facturation</span></a></nav>
+        {% include "comptes/partials/patient-sidebar-footer.html" %}
+    </aside>
+    <div class="nh-patient__main">
+        <header class="nh-patient__topbar"><p class="nh-patient__breadcrumb"><a href="{% url 'admin' %}">NovaHospito</a><span>/</span><strong>Nouvelle facture</strong></p><div class="nh-patient__top-actions"><span class="nh-patient__secure">Émission manuelle</span><span class="nh-patient__avatar nh-patient__avatar--top">{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}</span><span class="nh-patient__top-user"><strong>{{ user.get_full_name|default:user.username }}</strong><small>Administration</small></span></div></header>
+        <main class="nh-patient__content">
+            <section class="nh-patient__welcome nh-invoices__hero"><div><p class="nh-patient__eyebrow"><span></span> SUIVI FINANCIER</p><h1>Créer une facture</h1><p>La facture sera enregistrée avec le statut « En attente ».</p></div><a class="nh-patient__welcome-link" href="{% url 'facturation:historique' %}">Retour aux factures</a></section>
+            {% if messages %}<div class="nh-invoice-form__messages" aria-live="polite">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}
+            <section class="nh-invoice-form__panel"><div class="nh-invoice-form__heading"><h2>Informations de facturation</h2><p>Choisis un patient, éventuellement une consultation, puis saisis le montant en FCFA.</p></div>
+                <form method="post" novalidate>{% csrf_token %}
+                    {% if form.non_field_errors %}<div class="nh-invoice-form__error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+                    {% for field in form %}<div class="nh-invoice-form__field"><label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span aria-hidden="true"> *</span>{% endif %}</label>{{ field }}{% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}{% if field.errors %}<span class="nh-invoice-form__error" role="alert">{{ field.errors|striptags }}</span>{% endif %}</div>{% endfor %}
+                    <div class="nh-invoice-form__warning"><strong>À savoir</strong><span>Cette action crée une facture « En attente ». Elle n’encaisse aucun paiement, n’envoie pas de reçu et ne permet pas de marquer une facture comme payée.</span></div>
+                    <div class="nh-invoice-form__actions"><a href="{% url 'facturation:historique' %}">Annuler</a><button type="submit">Enregistrer la facture</button></div>
+                </form>
+            </section>
+            <footer class="nh-patient__footer"><span>NovaHospito · Espace sécurisé</span><span>Facturation manuelle · Sans paiement en ligne</span></footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

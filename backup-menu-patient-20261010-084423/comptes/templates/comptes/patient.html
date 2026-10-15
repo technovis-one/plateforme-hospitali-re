@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#141b2e">
+    <title>NovaHospito — Mon espace patient</title>
+    <link rel="stylesheet" href="{% static 'css/patient.css' %}?v=20261008-dashboard-font-1">
+    <link rel="stylesheet" href="{% static 'css/patient-lisibilite.css' %}?v=20261008-dashboard-font-2">
+    <link rel="stylesheet" href="{% static 'css/patient-navigation.css' %}?v=20261010-1">
+</head>
+<body>
+<div class="nh-patient" id="dashboard">
+    <aside class="nh-patient__sidebar">
+        <a class="nh-patient__brand" href="#dashboard" aria-label="NovaHospito — tableau de bord">
+            <img src="{% static 'img/logo.png' %}" alt="" width="38" height="38">
+            <span>Nova<span>Hospito</span><small>LA SANTÉ, ENSEMBLE</small></span>
+        </a>
+
+        <div class="nh-patient__workspace">
+            <span>VOTRE ESPACE</span>
+            <strong>Espace patient</strong>
+        </div>
+
+        <p class="nh-patient__nav-label">MENU PRINCIPAL</p>
+        <nav class="nh-patient__nav" aria-label="Navigation patient">
+            <a class="is-active" href="#dashboard" aria-current="page">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                <span>Tableau de bord</span>
+            </a>
+            <a href="{% url 'rdv:rendezvous' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                <span>Rendez-vous</span>
+                {% if rendezvous_list %}<b>{{ rendezvous_list|length }}</b>{% endif %}
+            </a>
+            <a href="{% url 'dossier:medical' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h6"/></svg>
+                <span>Dossier médical</span>
+            </a>
+            <a href="{% url 'facturation:historique' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h3"/></svg>
+                <span>Facturation</span>
+            </a>
+            <a href="{% url 'rdv:teleconsultations' %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>
+                <span>Téléconsultation</span>
+            </a>
+        </nav>
+
+        <div class="nh-patient__sidebar-spacer"></div>
+        <div class="nh-patient__help">
+            <span class="nh-patient__help-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"/><path d="M8 12h8M12 8v8"/></svg>
+            </span>
+            <strong>Besoin d’aide ?</strong>
+            <p>Notre équipe est là pour vous accompagner.</p>
+            <span class="nh-patient__help-link">Contacter le support <span aria-hidden="true">→</span></span>
+        </div>
+        <div class="nh-patient__side-profile">
+            <span class="nh-patient__avatar nh-patient__avatar--small">
+                {% if user.photo %}<img src="{{ user.photo.url }}" alt="">
+                {% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}
+            </span>
+            <span class="nh-patient__side-profile-copy">
+                <strong>{{ user.get_full_name|default:user.username }}</strong>
+                <small>Patient</small>
+            </span>
+        </div>
+        <a class="nh-patient__logout" href="{% url 'deconnexion' %}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>
+            Se déconnecter
+        </a>
+    </aside>
+
+    <div class="nh-patient__main">
+        <header class="nh-patient__topbar">
+            <p class="nh-patient__breadcrumb">NovaHospito <span aria-hidden="true">/</span> <strong>Mon espace</strong></p>
+            <div class="nh-patient__top-actions">
+                <span class="nh-patient__secure">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+                    Espace sécurisé
+                </span>
+                <span class="nh-patient__avatar nh-patient__avatar--top">
+                    {% if user.photo %}<img src="{{ user.photo.url }}" alt="Photo de {{ user.get_full_name|default:user.username }}">
+                    {% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}
+                </span>
+                <span class="nh-patient__top-user"><strong>{{ user.get_full_name|default:user.username }}</strong><small>Patient</small></span>
+            </div>
+        </header>
+
+        <main class="nh-patient__content">
+            <section class="nh-patient__welcome" aria-labelledby="nh-patient-title">
+                <div>
+                    <p class="nh-patient__eyebrow"><span></span> ESPACE PATIENT</p>
+                    <h1 id="nh-patient-title">Bonjour, {{ user.first_name|default:user.username }}</h1>
+                    <p>Voici un aperçu de votre santé et de vos activités.</p>
+                </div>
+                <a class="nh-patient__welcome-link" href="{% url 'rdv:rendezvous' %}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                    Prendre rendez-vous
+                </a>
+            </section>
+
+            <section class="nh-patient__summary" aria-label="Résumé santé">
+                <article class="nh-patient__summary-card nh-patient__summary-card--next">
+                    <span class="nh-patient__summary-icon nh-patient__summary-icon--blue" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M12 14v4M10 16h4"/></svg>
+                    </span>
+                    <div class="nh-patient__summary-label">PROCHAIN RENDEZ-VOUS</div>
+                    {% if prochain_rdv %}
+                        <strong class="nh-patient__summary-value">{{ prochain_rdv.date|date:"D d M" }} · {{ prochain_rdv.heure|time:"H:i" }}</strong>
+                        <span class="nh-patient__summary-detail">Dr. {{ prochain_rdv.medecin.first_name }} {{ prochain_rdv.medecin.last_name }}</span>
+                        <span class="nh-patient__summary-meta">{{ prochain_rdv.medecin.specialite }}</span>
+                    {% else %}
+                        <strong class="nh-patient__summary-value nh-patient__summary-value--muted">Aucun rendez-vous prévu</strong>
+                        <span class="nh-patient__summary-detail">Votre prochain rendez-vous apparaîtra ici.</span>
+                    {% endif %}
+                </article>
+
+                <article class="nh-patient__summary-card">
+                    <span class="nh-patient__summary-icon nh-patient__summary-icon--blue" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                    </span>
+                    <div class="nh-patient__summary-label">MES RENDEZ-VOUS</div>
+                    <strong class="nh-patient__summary-number">{{ rendezvous_list|length }}</strong>
+                    <span class="nh-patient__summary-detail">Rendez-vous enregistrés</span>
+                </article>
+
+                <article class="nh-patient__summary-card" id="medical-file">
+                    <span class="nh-patient__summary-icon nh-patient__summary-icon--green" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h6"/></svg>
+                    </span>
+                    <div class="nh-patient__summary-label">DOSSIER MÉDICAL</div>
+                    {% if dossier %}
+                        <strong class="nh-patient__summary-number">{{ consultations_count }}</strong>
+                        <span class="nh-patient__summary-detail">Consultation{{ consultations_count|pluralize }}</span>
+                    {% else %}
+                        <strong class="nh-patient__summary-value nh-patient__summary-value--muted">Dossier vide</strong>
+                        <span class="nh-patient__summary-detail">Il sera complété après votre première consultation.</span>
+                    {% endif %}
+                    <a class="nh-patient__dossier-link" href="{% url 'dossier:medical' %}">Ouvrir mon dossier <span aria-hidden="true">→</span></a>
+                </article>
+
+                <article class="nh-patient__summary-card" id="billing-summary">
+                    <span class="nh-patient__summary-icon nh-patient__summary-icon--amber" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h4"/></svg>
+                    </span>
+                    <div class="nh-patient__summary-label">FACTURE EN ATTENTE</div>
+                    {% if facture_attente %}
+                        <strong class="nh-patient__summary-value">{{ facture_attente.montant }} FCFA</strong>
+                        <span class="nh-patient__summary-detail">Émise le {{ facture_attente.date|date:"d M Y" }}</span>
+                    {% else %}
+                        <strong class="nh-patient__summary-value nh-patient__summary-value--muted">Aucune facture</strong>
+                        <span class="nh-patient__summary-detail">Vous êtes à jour.</span>
+                    {% endif %}
+                    <a class="nh-patient__dossier-link" href="{% url 'facturation:historique' %}">Voir mes factures{% if factures_count %} · {{ factures_count }}{% endif %} <span aria-hidden="true">→</span></a>
+                </article>
+            </section>
+
+            <section class="nh-patient__appointments" id="appointments" aria-labelledby="nh-appointments-title">
+                <div class="nh-patient__section-heading">
+                    <div>
+                        <p class="nh-patient__section-kicker">SUIVI DES SOINS</p>
+                        <h2 id="nh-appointments-title">Historique des rendez-vous</h2>
+                        <p>Retrouvez ici les rendez-vous associés à votre compte.</p>
+                    </div>
+                    <span class="nh-patient__count">{{ rendezvous_list|length }} rendez-vous</span>
+                </div>
+
+                {% if rendezvous_list %}
+                    <div class="nh-patient__appointment-list">
+                        {% for rdv in rendezvous_list %}
+                            <article class="nh-patient__appointment">
+                                <span class="nh-patient__doctor-avatar{% if forloop.counter|divisibleby:2 %} nh-patient__doctor-avatar--alt{% endif %}" aria-hidden="true">
+                                    {{ rdv.medecin.first_name|slice:":1"|upper }}{{ rdv.medecin.last_name|slice:":1"|upper }}
+                                </span>
+                                <div class="nh-patient__appointment-main">
+                                    <strong>Dr. {{ rdv.medecin.first_name }} {{ rdv.medecin.last_name }}</strong>
+                                    <span>{{ rdv.medecin.specialite }}</span>
+                                </div>
+                                <div class="nh-patient__appointment-date">
+                                    <strong>{{ rdv.date|date:"d M Y" }}</strong>
+                                    <span>{{ rdv.heure|time:"H:i" }}</span>
+                                </div>
+                                {% if rdv.statut == 'termine' %}
+                                    <span class="nh-patient__status nh-patient__status--done">Terminé</span>
+                                {% elif rdv.statut == 'annule' %}
+                                    <span class="nh-patient__status nh-patient__status--cancelled">Annulé</span>
+                                {% else %}
+                                    <span class="nh-patient__status nh-patient__status--upcoming">À venir</span>
+                                {% endif %}
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="nh-patient__empty">
+                        <span class="nh-patient__empty-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                        </span>
+                        <strong>Pas encore de rendez-vous</strong>
+                        <p>Vos rendez-vous s’afficheront dans cet espace.</p>
+                    </div>
+                {% endif %}
+            </section>
+
+            <section class="nh-patient__telemed" id="consultations" aria-label="Téléconsultation">
+                <span class="nh-patient__telemed-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg>
+                </span>
+                <div><strong>Besoin de consulter à distance ?</strong>{% if next_teleconsultation %}<span>Votre téléconsultation confirmée est prévue le {{ next_teleconsultation.date|date:"d/m/Y" }} à {{ next_teleconsultation.heure|time:"H:i" }}.</span><a class="nh-patient__dossier-link" href="{% url 'rdv:teleconsultation' next_teleconsultation.pk %}">Ouvrir la salle de consultation <span aria-hidden="true">→</span></a>{% else %}<span>Les téléconsultations confirmées apparaîtront ici. La salle s’ouvre à proximité de l’heure du rendez-vous.</span>{% endif %}</div>
+            </section>
+
+            <footer class="nh-patient__footer">
+                <span>NovaHospito · Espace sécurisé</span>
+                <span>Prototype de démonstration · Données de votre compte</span>
+            </footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

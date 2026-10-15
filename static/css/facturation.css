@@ -1,0 +1,39 @@
+.nh-invoices { font-size: 15px; }
+.nh-invoices__hero { margin-bottom: 17px; }
+.nh-invoices__hero .nh-patient__welcome > div > p:last-child { font-size: 14px; line-height: 1.55; }
+.nh-invoices__hero .nh-patient__welcome-link { min-height: 44px; font-size: 13px; }
+.nh-invoices__summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:16px; }
+.nh-invoices__summary article { display:flex; min-width:0; min-height:94px; flex-direction:column; justify-content:center; gap:9px; padding:15px; border:1px solid var(--nh-patient-border); border-radius:12px; background:#fff; box-shadow:0 3px 12px rgb(26 39 70 / 3%); }
+.nh-invoices__summary small { color:var(--nh-patient-muted); font-size:10px; font-weight:750; letter-spacing:.06em; }
+.nh-invoices__summary strong { color:var(--nh-patient-ink); font-size:19px; line-height:1.25; overflow-wrap:anywhere; }
+.nh-invoices__panel { overflow:hidden; padding:18px; border:1px solid var(--nh-patient-border); border-radius:13px; background:#fff; box-shadow:0 3px 12px rgb(26 39 70 / 3%); }
+.nh-invoices__heading { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:13px; }
+.nh-invoices__heading p { margin:0 0 5px; color:var(--nh-patient-blue-dark); font-size:10px; font-weight:750; letter-spacing:.08em; }
+.nh-invoices__heading h2 { margin:0 0 5px; color:var(--nh-patient-ink); font-size:19px; }
+.nh-invoices__heading span { color:#74809b; font-size:12px; line-height:1.5; }
+.nh-invoices__count { flex:0 0 auto; padding:6px 9px; border-radius:999px; background:var(--nh-patient-blue-pale); color:var(--nh-patient-blue-dark)!important; font-weight:700; }
+.nh-invoices__table-wrap { overflow-x:auto; }
+.nh-invoices table { width:100%; border-collapse:collapse; text-align:left; }
+.nh-invoices th { padding:10px 9px; border-bottom:1px solid var(--nh-patient-border); color:#74809b; font-size:10px; font-weight:750; letter-spacing:.04em; text-transform:uppercase; white-space:nowrap; }
+.nh-invoices td { padding:12px 9px; border-bottom:1px solid #edf0f6; color:#39445d; font-size:13px; vertical-align:middle; }
+.nh-invoices tbody tr:last-child td { border-bottom:0; }
+.nh-invoices td strong { color:#202a43; }
+.nh-invoices__status { display:inline-flex; align-items:center; padding:5px 9px; border-radius:999px; background:#eef1f6; color:#58647b; font-size:11px; font-weight:700; white-space:nowrap; }
+.nh-invoices__status--paid { background:#e8f6ed; color:#187448; }
+.nh-invoices__status--pending { background:#fff3db; color:#8c5c09; }
+.nh-invoices__status--cancelled { background:#fdecee; color:#a43240; }
+.nh-invoices__muted { color:#8992a9; }
+.nh-invoices__empty { padding:30px 14px; text-align:center; }
+.nh-invoices__empty strong { color:var(--nh-patient-ink); font-size:15px; }
+.nh-invoices__empty p,.nh-invoices__privacy { color:#707b94; font-size:12px; line-height:1.6; }
+.nh-invoices__pagination { display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:14px; color:#68748e; font-size:12px; }
+.nh-invoices__pagination a { color:var(--nh-patient-blue-dark)!important; font-weight:700; text-decoration:none; }
+.nh-invoices__pagination a:hover { text-decoration:underline; }
+.nh-invoices__notice { padding:15px 17px; border:1px solid #ecd8b3; border-radius:12px; background:#fff9ee; color:#755116; }
+.nh-invoices__notice p { margin:6px 0 0; font-size:13px; line-height:1.6; }
+.nh-invoices__privacy { margin:13px 0; }
+.nh-invoices__dossier-link { display:inline-flex; margin-top:8px; color:var(--nh-patient-blue-dark)!important; font-weight:700; text-decoration:none; }
+.nh-invoices__dossier-link:hover { text-decoration:underline; }
+@media(max-width:900px) { .nh-invoices__summary { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:760px) { .nh-invoices__summary { gap:8px; } .nh-invoices__summary article { min-height:82px; padding:12px; } .nh-invoices__summary strong { font-size:16px; } .nh-invoices__panel { padding:13px; } .nh-invoices__hero { gap:12px; } .nh-invoices__hero .nh-patient__welcome-link { width:100%; } .nh-invoices__heading h2 { font-size:17px; } .nh-invoices th,.nh-invoices td { padding:10px 8px; } }
+@media(max-width:380px) { .nh-invoices__summary { grid-template-columns:1fr; } .nh-invoices__count { display:none; } }

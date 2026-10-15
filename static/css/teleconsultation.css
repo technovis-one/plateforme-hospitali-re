@@ -1,0 +1,37 @@
+.nh-teleconsult-page { font-size:15px; }
+.nh-teleconsult__hero { margin-bottom:15px; }
+.nh-teleconsult__hero .nh-patient__welcome > div > p:last-child { font-size:14px; line-height:1.55; }
+.nh-teleconsult__hero .nh-patient__welcome-link { min-height:44px; font-size:13px; }
+.nh-teleconsult__meta { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-bottom:13px; }
+.nh-teleconsult__meta > div { display:flex; min-width:0; flex-direction:column; gap:6px; padding:13px; border:1px solid var(--nh-patient-border); border-radius:11px; background:#fff; }
+.nh-teleconsult__meta small { color:var(--nh-patient-muted); font-size:10px; font-weight:750; letter-spacing:.06em; }
+.nh-teleconsult__meta strong { color:#25304a; font-size:13px; line-height:1.4; overflow-wrap:anywhere; }
+.nh-teleconsult__notice { margin:12px 0; padding:15px 17px; border:1px solid #ecd8b3; border-radius:12px; background:#fff9ee; color:#755116; }
+.nh-teleconsult__notice strong { font-size:14px; }
+.nh-teleconsult__notice p { margin:6px 0 0; font-size:13px; line-height:1.6; }
+.nh-teleconsult__call-panel { overflow:hidden; margin-top:12px; padding:14px; border:1px solid var(--nh-patient-border); border-radius:14px; background:#fff; box-shadow:0 4px 16px rgb(26 39 70 / 5%); }
+.nh-teleconsult__call-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.nh-teleconsult__call-heading p { margin:0 0 4px; color:var(--nh-patient-blue-dark); font-size:10px; font-weight:750; letter-spacing:.08em; }
+.nh-teleconsult__call-heading h2 { margin:0; color:var(--nh-patient-ink); font-size:19px; }
+.nh-teleconsult__live { display:inline-flex; flex:0 0 auto; align-items:center; gap:7px; color:#187448; font-size:12px; font-weight:700; }
+.nh-teleconsult__live i { width:8px; height:8px; border-radius:50%; background:#1a8d56; }
+.nh-teleconsult__frame { width:100%; height:min(68vh,720px); min-height:420px; overflow:hidden; border-radius:11px; background:#141b2e; }
+.nh-teleconsult__frame iframe { display:block; width:100%; height:100%; border:0; }
+.nh-teleconsult__status { margin:10px 2px 0; color:#56627c; font-size:12px; line-height:1.5; }
+.nh-teleconsult__join { display:flex; align-items:center; gap:14px; margin:14px 0; padding:16px; border:1px solid #dce5ff; border-radius:13px; background:#f8faff; }
+.nh-teleconsult__icon { display:grid; width:40px; height:40px; flex:0 0 auto; place-items:center; border-radius:11px; background:var(--nh-patient-blue-pale); color:var(--nh-patient-blue-dark); }
+.nh-teleconsult__icon svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.nh-teleconsult__join > div { min-width:0; flex:1; }
+.nh-teleconsult__join > div strong { color:var(--nh-patient-ink); font-size:14px; }
+.nh-teleconsult__join p { margin:5px 0 0; color:#65728d; font-size:12px; line-height:1.55; }
+.nh-teleconsult__join form { flex:0 0 auto; }
+.nh-teleconsult__join-button { min-height:43px; padding:0 14px; border:0; border-radius:9px; background:var(--nh-patient-blue); color:#fff; font:inherit; font-size:13px; font-weight:700; cursor:pointer; }
+.nh-teleconsult__join-button:hover { background:var(--nh-patient-blue-dark); }
+.nh-teleconsult__join-button:focus-visible { outline:3px solid #aebcff; outline-offset:2px; }
+.nh-teleconsult__privacy { margin:13px 0; padding:14px 16px; border:1px solid var(--nh-patient-border); border-radius:12px; background:#fff; }
+.nh-teleconsult__privacy strong { color:var(--nh-patient-ink); font-size:13px; }
+.nh-teleconsult__privacy p { margin:6px 0 0; color:#68748e; font-size:12px; line-height:1.65; }
+@media(max-width:900px) { .nh-teleconsult__meta { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:760px) { .nh-teleconsult__hero { gap:12px; } .nh-teleconsult__hero .nh-patient__welcome-link { width:100%; } .nh-teleconsult__call-panel { padding:10px; } .nh-teleconsult__frame { height:70vh; min-height:380px; } .nh-teleconsult__join { align-items:flex-start; flex-wrap:wrap; } .nh-teleconsult__join form { width:100%; } .nh-teleconsult__join-button { width:100%; } }
+@media(max-width:420px) { .nh-teleconsult__meta { gap:7px; } .nh-teleconsult__meta > div { padding:10px; } .nh-teleconsult__meta strong { font-size:12px; } .nh-teleconsult__frame { min-height:340px; } .nh-teleconsult__call-heading { align-items:flex-start; flex-direction:column; } }
+@media(prefers-reduced-motion:reduce) { .nh-teleconsult__join-button { transition:none; } }

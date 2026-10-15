@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}NovaHospito — Créer un compte patient{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/connexion.css' %}?v=20261015-droite-naturel">
+<link rel="stylesheet" href="{% static 'css/inscription.css' %}?v=20261015-droite-naturel">
+{% endblock %}
+
+{% block content %}
+<main class="nh-auth nh-register">
+    <section class="nh-auth__hero" aria-labelledby="nh-register-title">
+        <div class="nh-auth__glow nh-auth__glow--top" aria-hidden="true"></div>
+        <div class="nh-auth__glow nh-auth__glow--bottom" aria-hidden="true"></div>
+
+        <a class="nh-auth__brand" href="{% url 'accueil' %}" aria-label="NovaHospito, accueil">
+            <img src="{% static 'img/logo.png' %}" alt="" width="42" height="42">
+            <span>Nova<span class="nh-auth__brand-accent">Hospito</span></span>
+        </a>
+
+        <div class="nh-auth__intro">
+            <p class="nh-auth__eyebrow"><span></span> Rejoignez NovaHospito</p>
+            <h1 id="nh-register-title">Votre santé mérite<br>un suivi simple.</h1>
+            <p class="nh-auth__description">
+                Un compte patient pour vos rendez-vous, votre dossier médical
+                et vos échanges avec vos praticiens.
+            </p>
+
+            <ul class="nh-register__benefits">
+                <li>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
+                    Prise de rendez-vous en quelques clics
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
+                    Dossier médical toujours accessible
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
+                    Données protégées et confidentielles
+                </li>
+            </ul>
+        </div>
+
+        <figure class="nh-auth__hero-image">
+            <img src="{% static 'img/auth/inscription-pediatrie.png' %}" alt="Une infirmière examine un bébé en présence de sa mère.">
+        </figure>
+
+        <p class="nh-auth__hero-foot">Une équipe de soins, connectée autour de vous.</p>
+    </section>
+
+    <section class="nh-auth__panel nh-register__panel" aria-labelledby="nh-register-form-title">
+        <div class="nh-register__form-wrap">
+            <div class="nh-register__heading">
+                <p class="nh-auth__section-label">Votre espace santé</p>
+                <h2 id="nh-register-form-title">Créer un compte patient</h2>
+                <p class="nh-auth__lead">Remplissez vos informations pour commencer.</p>
+            </div>
+
+            {% if messages %}
+                <div class="nh-auth__messages" aria-live="polite">
+                    {% for message in messages %}
+                        <p class="nh-auth__message {{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if form.non_field_errors %}
+                <div class="nh-auth__message error" role="alert">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <form class="nh-register__form" method="post" action="{% url 'inscription' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="nh-register__grid">
+                    <div class="nh-auth__field">
+                        <label for="{{ form.first_name.id_for_label }}">Prénom</label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}<p class="nh-auth__field-error" role="alert">{{ form.first_name.errors.0 }}</p>{% endif %}
+                    </div>
+                    <div class="nh-auth__field">
+                        <label for="{{ form.last_name.id_for_label }}">Nom</label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}<p class="nh-auth__field-error" role="alert">{{ form.last_name.errors.0 }}</p>{% endif %}
+                    </div>
+                </div>
+
+                <div class="nh-register__grid">
+                    <div class="nh-auth__field">
+                        <label for="{{ form.username.id_for_label }}">Nom d’utilisateur</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}<p class="nh-auth__field-error" role="alert">{{ form.username.errors.0 }}</p>{% endif %}
+                    </div>
+                    <div class="nh-auth__field">
+                        <label for="{{ form.email.id_for_label }}">Adresse e-mail</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}<p class="nh-auth__field-error" role="alert">{{ form.email.errors.0 }}</p>{% endif %}
+                    </div>
+                </div>
+
+                <div class="nh-register__grid">
+                    <div class="nh-auth__field">
+                        <label for="{{ form.date_naissance.id_for_label }}">Date de naissance</label>
+                        {{ form.date_naissance }}
+                        {% if form.date_naissance.errors %}<p class="nh-auth__field-error" role="alert">{{ form.date_naissance.errors.0 }}</p>{% endif %}
+                    </div>
+                    <div class="nh-auth__field">
+                        <label for="{{ form.num_tel.id_for_label }}">Téléphone</label>
+                        {{ form.num_tel }}
+                        {% if form.num_tel.errors %}<p class="nh-auth__field-error" role="alert">{{ form.num_tel.errors.0 }}</p>{% endif %}
+                    </div>
+                </div>
+
+                <div class="nh-auth__field">
+                    <label for="{{ form.adresse.id_for_label }}">Adresse</label>
+                    {{ form.adresse }}
+                    {% if form.adresse.errors %}<p class="nh-auth__field-error" role="alert">{{ form.adresse.errors.0 }}</p>{% endif %}
+                </div>
+
+                <div class="nh-register__grid">
+                    <div class="nh-auth__field">
+                        <label for="{{ form.password1.id_for_label }}">Mot de passe</label>
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}<p class="nh-auth__field-error" role="alert">{{ form.password1.errors.0 }}</p>{% endif %}
+                    </div>
+                    <div class="nh-auth__field">
+                        <label for="{{ form.password2.id_for_label }}">Confirmer le mot de passe</label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}<p class="nh-auth__field-error" role="alert">{{ form.password2.errors.0 }}</p>{% endif %}
+                    </div>
+                </div>
+
+                <div class="nh-register__photo">
+                    <div class="nh-register__photo-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 15-5-5L5 19"/></svg>
+                    </div>
+                    <div class="nh-register__photo-copy">
+                        <label for="{{ form.photo.id_for_label }}">Photo de profil <span>(facultative)</span></label>
+                        <p>Ajoutez une image à votre compte, si vous le souhaitez.</p>
+                    </div>
+                    {{ form.photo }}
+                    {% if form.photo.errors %}<p class="nh-auth__field-error" role="alert">{{ form.photo.errors.0 }}</p>{% endif %}
+                </div>
+
+                <button class="nh-auth__submit" type="submit">
+                    Créer mon compte
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </form>
+
+            <p class="nh-auth__signup">
+                Déjà inscrit ? <a href="{% url 'accueil' %}">Se connecter</a>
+            </p>
+            <p class="nh-auth__security">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Inscription sécurisée · NovaHospito
+            </p>
+        </div>
+    </section>
+</main>
+{% endblock %}

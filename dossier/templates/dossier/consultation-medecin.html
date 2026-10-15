@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#141b2e">
+    <title>NovaHospito — Consultation</title>
+    <link rel="stylesheet" href="{% static 'css/staff.css' %}">
+    <link rel="stylesheet" href="{% static 'css/medecin-lisibilite.css' %}?v=20261010-1">
+    <link rel="stylesheet" href="{% static 'css/staff-support.css' %}?v=20261010-1">
+    <link rel="stylesheet" href="{% static 'css/consultation-medecin.css' %}?v=20261010-1">
+</head>
+<body>
+<div class="nh-staff nh-doctor nh-clinical" id="consultation">
+    <aside class="nh-staff__sidebar">
+        <a class="nh-staff__brand" href="{% url 'medecin' %}" aria-label="NovaHospito, retour à l’espace médecin">
+            <img src="{% static 'img/logo.png' %}" alt="" width="38" height="38">
+            <span>Nova<span>Hospito</span><small>ESPACE PROFESSIONNEL</small></span>
+        </a>
+        <div class="nh-staff__workspace"><small>VOTRE CABINET</small><strong>Clinique NovaHospito</strong></div>
+        <div class="nh-staff__caption">ESPACE DE TRAVAIL</div>
+        {% include "comptes/partials/doctor-navigation.html" with active_page="consultation" %}
+        <div class="nh-staff__sidebar-spacer"></div>
+        <div class="nh-staff__support"><span class="nh-staff__support-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"/><path d="M8 12h8m-4-4v8"/></svg></span><strong>Besoin d’aide ?</strong><p>Notre équipe est là pour vous accompagner.</p><span class="nh-staff__support-link">Contacter le support <span aria-hidden="true">→</span></span></div>
+        <a class="nh-staff__logout" href="{% url 'deconnexion' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>Se déconnecter</a>
+        <div class="nh-staff__profile">
+            <span class="nh-staff__avatar">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span>
+            <span class="nh-staff__profile-copy"><strong>{{ user.get_full_name|default:user.username }}</strong><small>{{ user.specialite|default:"Médecin" }}</small></span>
+        </div>
+    </aside>
+
+    <div class="nh-staff__main">
+        <header class="nh-staff__topbar"><p><a href="{% url 'medecin' %}">NovaHospito</a> <span>/</span> <strong>Consultation</strong></p><div class="nh-staff__top-profile"><span class="nh-staff__secure">Dossier confidentiel</span><span class="nh-staff__avatar nh-staff__avatar--top">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span><span class="nh-staff__top-name"><strong>{{ user.get_full_name|default:user.username }}</strong><small>{{ user.specialite|default:"Médecin" }}</small></span></div></header>
+        <main class="nh-staff__content">
+            <a class="nh-clinical__back" href="{% url 'medecin' %}#planning">← Retour au planning</a>
+            <section class="nh-staff__hero nh-clinical__hero"><div><span class="nh-staff__eyebrow">CONSULTATION RÉELLE</span><h1>{{ appointment.patient.get_full_name|default:appointment.patient.username }}</h1><p>Rendez-vous du {{ appointment.date|date:"l d F Y" }} à {{ appointment.heure|time:"H:i" }}</p></div><span class="nh-staff__demo-badge"><i></i>{% if appointment.statut == 'termine' %}Rendez-vous terminé{% else %}Rendez-vous confirmé{% endif %}</span></section>
+            {% if messages %}<div class="nh-clinical__messages" aria-live="polite">{% for message in messages %}<p class="nh-clinical__message" role="status">{{ message }}</p>{% endfor %}</div>{% endif %}
+
+            <div class="nh-clinical__layout">
+                <section class="nh-staff__card nh-clinical__patient-card" aria-labelledby="nh-clinical-patient-title">
+                    <div class="nh-staff__card-head"><div><span class="nh-staff__kicker">RENDEZ-VOUS LIÉ À VOTRE COMPTE</span><h2 id="nh-clinical-patient-title">Informations patient</h2><p>Les renseignements ci-dessous proviennent du profil et du rendez-vous enregistré.</p></div></div>
+                    <dl class="nh-clinical__facts">
+                        <div><dt>Nom</dt><dd>{{ appointment.patient.get_full_name|default:appointment.patient.username }}</dd></div>
+                        <div><dt>Date de naissance</dt><dd>{{ appointment.patient.date_naissance|date:"d/m/Y"|default:"Non renseignée" }}</dd></div>
+                        <div><dt>Téléphone</dt><dd>{{ appointment.patient.num_tel|default:"Non renseigné" }}</dd></div>
+                        <div><dt>E-mail</dt><dd>{{ appointment.patient.email|default:"Non renseigné" }}</dd></div>
+                        <div><dt>Type</dt><dd>{% if appointment.type == 'teleconsultation' %}Téléconsultation{% else %}Présentiel{% endif %}</dd></div>
+                        <div><dt>Statut</dt><dd>{% if appointment.statut == 'termine' %}Terminé{% else %}Confirmé{% endif %}</dd></div>
+                    </dl>
+                    <div class="nh-clinical__medical-context"><h3>Dossier médical existant</h3>{% if dossier %}<div><strong>Antécédents</strong><p>{% if dossier.antecedents %}{{ dossier.antecedents|linebreaksbr }}{% else %}Aucun antécédent renseigné.{% endif %}</p></div><div><strong>Allergies</strong><p>{% if dossier.allergies %}{{ dossier.allergies|linebreaksbr }}{% else %}Aucune allergie renseignée.{% endif %}</p></div>{% else %}<p>Aucun dossier médical séparé n’est enregistré pour ce patient.</p>{% endif %}</div>
+                </section>
+
+                <section class="nh-staff__card nh-clinical__form-card" aria-labelledby="nh-clinical-form-title">
+                    <div class="nh-staff__card-head"><div><span class="nh-staff__kicker">DOSSIER DE CONSULTATION</span><h2 id="nh-clinical-form-title">Compte-rendu et ordonnance</h2><p>Enregistrement dans le dossier associé à ce rendez-vous.</p></div></div>
+                    {% if can_edit %}
+                        <form method="post" class="nh-clinical__form" novalidate>{% csrf_token %}
+                            {% if form.non_field_errors %}<div class="nh-clinical__error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+                            {% for field in form %}<div class="nh-clinical__field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}{% if field.errors %}<span class="nh-clinical__error" role="alert">{{ field.errors|striptags }}</span>{% endif %}</div>{% endfor %}
+                            <p class="nh-clinical__privacy">Enregistre uniquement les informations nécessaires au suivi clinique. Le patient pourra consulter le compte-rendu et l’ordonnance depuis son dossier médical.</p>
+                            <button class="nh-clinical__submit" type="submit">{% if consultation %}Mettre à jour{% else %}Enregistrer la consultation{% endif %}</button>
+                        </form>
+                    {% else %}
+                        <div class="nh-clinical__locked"><strong>La saisie n’est pas encore ouverte</strong><p>Le rendez-vous est confirmé pour une date ultérieure. Le compte-rendu pourra être saisi à partir de l’heure prévue.</p>{% if consultation %}<div><h3>Compte-rendu déjà enregistré</h3><p>{{ consultation.compte_rendu|default:"Aucun compte-rendu saisi."|linebreaksbr }}</p><h3>Ordonnance existante</h3><p>{{ consultation.ordonnance|default:"Aucune ordonnance enregistrée."|linebreaksbr }}</p></div>{% endif %}</div>
+                    {% endif %}
+                </section>
+            </div>
+            <footer class="nh-staff__footer"><span>NovaHospito · Accès médecin autorisé</span><span>Patient et rendez-vous vérifiés côté serveur</span></footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

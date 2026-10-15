@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#141b2e">
+    <title>NovaHospito — Dossier médical</title>
+    <link rel="stylesheet" href="{% static 'css/patient.css' %}?v=20261008-dashboard-font-2">
+    <link rel="stylesheet" href="{% static 'css/patient-lisibilite.css' %}?v=20261008-dashboard-font-2">
+    <link rel="stylesheet" href="{% static 'css/dossier-medical.css' %}?v=20261008-1">
+</head>
+<body>
+<div class="nh-patient nh-record" id="medical-record">
+    <aside class="nh-patient__sidebar">
+        <a class="nh-patient__brand" href="{% url 'patient' %}" aria-label="NovaHospito — tableau de bord patient">
+            <img src="{% static 'img/logo.png' %}" alt="" width="38" height="38">
+            <span>Nova<span>Hospito</span><small>LA SANTÉ, ENSEMBLE</small></span>
+        </a>
+        <div class="nh-patient__workspace"><span>VOTRE ESPACE</span><strong>Espace patient</strong></div>
+        <p class="nh-patient__nav-label">MENU PRINCIPAL</p>
+        <nav class="nh-patient__nav" aria-label="Navigation patient">
+            <a href="{% url 'patient' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Tableau de bord</span></a>
+            <a href="{% url 'rdv:rendezvous' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span>Rendez-vous</span></a>
+            <a class="is-active" href="{% url 'dossier:medical' %}" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h6"/></svg><span>Dossier médical</span></a>
+            <a href="{% url 'facturation:historique' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h3"/></svg><span>Facturation</span></a>
+            <a href="{% url 'rdv:teleconsultations' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg><span>Téléconsultation</span></a>
+        </nav>
+        <div class="nh-patient__sidebar-spacer"></div>
+        <a class="nh-patient__logout" href="{% url 'deconnexion' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>Se déconnecter</a>
+        <div class="nh-patient__side-profile"><span class="nh-patient__avatar nh-patient__avatar--small">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span><span class="nh-patient__side-profile-copy"><strong>{{ user.get_full_name|default:user.username }}</strong><small>Patient</small></span></div>
+    </aside>
+
+    <div class="nh-patient__main">
+        <header class="nh-patient__topbar"><p class="nh-patient__breadcrumb"><a href="{% url 'patient' %}">NovaHospito</a> <span>/</span> <strong>Dossier médical</strong></p><div class="nh-patient__top-actions"><span class="nh-patient__secure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Espace sécurisé</span><span class="nh-patient__avatar nh-patient__avatar--top">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span><span class="nh-patient__top-user"><strong>{{ user.get_full_name|default:user.username }}</strong><small>Patient</small></span></div></header>
+
+        <main class="nh-patient__content">
+            <section class="nh-patient__welcome nh-record__hero"><div><p class="nh-patient__eyebrow"><span></span> INFORMATIONS CONFIDENTIELLES</p><h1>Dossier médical</h1><p>Vos informations de santé et l’historique de vos consultations.</p></div><a class="nh-patient__welcome-link" href="{% url 'patient' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"/></svg>Retour au tableau de bord</a></section>
+
+            {% if profile_missing %}
+                <section class="nh-record__notice" role="alert"><strong>Profil patient à compléter</strong><p>Le compte connecté ne possède pas de fiche patient associée. Pour protéger vos données, le dossier n’est pas affiché. Aucune fiche n’a été créée automatiquement.</p></section>
+            {% else %}
+                {% if record_missing %}
+                    <section class="nh-record__notice"><strong>Dossier médical non initialisé</strong><p>Aucun dossier médical n’est encore associé à votre compte. L’historique des consultations, s’il existe, reste consultable plus bas. Cette page n’ajoute ni dossier ni données médicales.</p></section>
+                {% else %}
+                    <section class="nh-record__summary" aria-label="Résumé du dossier"><article><span class="nh-record__summary-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h6"/></svg></span><div><small>CONSULTATIONS</small><strong>{{ consultations|length }}</strong></div></article><article><span class="nh-record__summary-icon nh-record__summary-icon--green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"/></svg></span><div><small>ANTÉCÉDENTS</small><strong>{% if dossier.antecedents %}Renseignés{% else %}Non renseignés{% endif %}</strong></div></article><article><span class="nh-record__summary-icon nh-record__summary-icon--amber"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 14 4-4M7 17l-1 1a3 3 0 0 1-4-4l4-4a3 3 0 0 1 4 0M17 7l1-1a3 3 0 0 1 4 4l-4 4a3 3 0 0 1-4 0"/></svg></span><div><small>ALLERGIES</small><strong>{% if dossier.allergies %}Renseignées{% else %}Non renseignées{% endif %}</strong></div></article></section>
+                    <section class="nh-record__clinical-grid" aria-label="Résumé médical">
+                        <article class="nh-record__card"><div class="nh-record__card-heading"><span class="nh-record__card-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"/><path d="M8 12h8M12 8v8"/></svg></span><div><p class="nh-patient__section-kicker">SANTÉ</p><h2>Antécédents médicaux</h2></div></div>{% if dossier.antecedents %}<div class="nh-record__prose">{{ dossier.antecedents|linebreaksbr }}</div>{% else %}<p class="nh-record__empty">Aucun antécédent n’est renseigné dans votre dossier.</p>{% endif %}</article>
+                        <article class="nh-record__card"><div class="nh-record__card-heading"><span class="nh-record__card-icon nh-record__card-icon--amber"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 14 4-4M7 17l-1 1a3 3 0 0 1-4-4l4-4a3 3 0 0 1 4 0M17 7l1-1a3 3 0 0 1 4 4l-4 4a3 3 0 0 1-4 0"/></svg></span><div><p class="nh-patient__section-kicker">PRÉCAUTIONS</p><h2>Allergies connues</h2></div></div>{% if dossier.allergies %}<div class="nh-record__prose">{{ dossier.allergies|linebreaksbr }}</div>{% else %}<p class="nh-record__empty">Aucune allergie n’est renseignée dans votre dossier.</p>{% endif %}</article>
+                    </section>
+                {% endif %}
+
+                <section class="nh-patient__appointments nh-record__history" id="consultations" aria-labelledby="nh-record-history-title"><div class="nh-patient__section-heading"><div><p class="nh-patient__section-kicker">SUIVI DES SOINS</p><h2 id="nh-record-history-title">Historique des consultations</h2><p>Comptes rendus et prescriptions associés à vos consultations.</p></div><span class="nh-patient__count">{{ consultations|length }} consultation{{ consultations|length|pluralize }}</span></div>
+                    {% if consultations %}<div class="nh-record__consultations">{% for consultation in consultations %}<article class="nh-record__consultation"><div class="nh-record__consultation-top"><div><p class="nh-patient__section-kicker">CONSULTATION</p><h3>{{ consultation.rendez_vous.medecin.get_full_name|default:consultation.rendez_vous.medecin.username }}</h3><p class="nh-record__doctor-meta">{{ consultation.rendez_vous.medecin.specialite }} · {% if consultation.rendez_vous.type == 'presentiel' %}Présentiel{% elif consultation.rendez_vous.type == 'teleconsultation' %}Téléconsultation{% else %}Type non défini{% endif %}</p></div><time datetime="{{ consultation.date|date:'Y-m-d' }}">{{ consultation.date|date:"d M Y" }}</time></div>
+                        {% if consultation.compte_rendu %}<div class="nh-record__detail"><strong>Compte rendu</strong><div class="nh-record__prose">{{ consultation.compte_rendu|linebreaksbr }}</div></div>{% else %}<p class="nh-record__empty">Aucun compte rendu n’est renseigné pour cette consultation.</p>{% endif %}
+                        {% if consultation.ordonnance %}<div class="nh-record__detail nh-record__prescription"><strong>Ordonnance</strong><div class="nh-record__prose">{{ consultation.ordonnance|linebreaksbr }}</div></div>{% endif %}
+                        {% with medicaments=consultation.medicaments.all %}{% if medicaments %}<div class="nh-record__detail nh-record__medicines"><strong>Médicaments associés</strong><ul>{% for medicament in medicaments %}<li>{{ medicament }}</li>{% endfor %}</ul></div>{% endif %}{% endwith %}
+                    </article>{% endfor %}</div>{% else %}<div class="nh-patient__empty"><span class="nh-patient__empty-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h6"/></svg></span><strong>Aucune consultation enregistrée</strong><p>Les consultations apparaîtront ici lorsqu’elles seront enregistrées dans votre dossier.</p></div>{% endif %}
+                </section>
+                <p class="nh-record__privacy-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Ces informations sont affichées en lecture seule à partir du dossier associé à votre compte.</p>
+            {% endif %}
+            <footer class="nh-patient__footer"><span>NovaHospito · Espace sécurisé</span><span>Informations médicales · Lecture seule</span></footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

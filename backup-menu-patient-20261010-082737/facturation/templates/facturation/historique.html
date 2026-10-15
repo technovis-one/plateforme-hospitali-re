@@ -1,0 +1,69 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#141b2e">
+    <title>NovaHospito — {% if is_admin %}Gestion des factures{% else %}Mes factures{% endif %}</title>
+    <link rel="stylesheet" href="{% static 'css/patient.css' %}">
+    <link rel="stylesheet" href="{% static 'css/patient-lisibilite.css' %}?v=20261008-facturation-1">
+    <link rel="stylesheet" href="{% static 'css/facturation.css' %}?v=20261008-1">
+    <link rel="stylesheet" href="{% static 'css/step8-modules.css' %}?v=20261008-1">
+</head>
+<body>
+<div class="nh-patient nh-invoices">
+    <aside class="nh-patient__sidebar">
+        <a class="nh-patient__brand" href="{% url retour_url %}" aria-label="NovaHospito — retour à mon espace"><img src="{% static 'img/logo.png' %}" alt="" width="38" height="38"><span>Nova<span>Hospito</span><small>LA SANTÉ, ENSEMBLE</small></span></a>
+        <div class="nh-patient__workspace"><span>VOTRE ESPACE</span><strong>{% if is_admin %}Administration{% else %}Espace patient{% endif %}</strong></div>
+        <p class="nh-patient__nav-label">MENU PRINCIPAL</p>
+        <nav class="nh-patient__nav" aria-label="Navigation">
+            {% if is_admin %}
+                <a href="{% url 'admin' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Vue clinique</span></a>
+            {% else %}
+                <a href="{% url 'patient' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Tableau de bord</span></a>
+                <a href="{% url 'rdv:rendezvous' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span>Rendez-vous</span></a>
+                <a href="{% url 'dossier:medical' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h6"/></svg><span>Dossier médical</span></a>
+            {% endif %}
+            {% if not is_admin %}<a href="{% url 'rdv:teleconsultations' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg><span>Téléconsultation</span></a>{% endif %}
+            <a class="is-active" href="{% url 'facturation:historique' %}" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h4"/></svg><span>Facturation</span></a>
+        </nav>
+        <div class="nh-patient__sidebar-spacer"></div>
+        <a class="nh-patient__logout" href="{% url 'deconnexion' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>Se déconnecter</a>
+        <div class="nh-patient__side-profile"><span class="nh-patient__avatar nh-patient__avatar--small">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span><span class="nh-patient__side-profile-copy"><strong>{{ user.get_full_name|default:user.username }}</strong><small>{% if is_admin %}Administration{% else %}Patient{% endif %}</small></span></div>
+    </aside>
+
+    <div class="nh-patient__main">
+        <header class="nh-patient__topbar"><p class="nh-patient__breadcrumb"><a href="{% url retour_url %}">NovaHospito</a><span>/</span><strong>Facturation</strong></p><div class="nh-patient__top-actions"><span class="nh-patient__secure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Consultation sécurisée</span><span class="nh-patient__avatar nh-patient__avatar--top">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span><span class="nh-patient__top-user"><strong>{{ user.get_full_name|default:user.username }}</strong><small>{% if is_admin %}Administration{% else %}Patient{% endif %}</small></span></div></header>
+        <main class="nh-patient__content">
+            <section class="nh-patient__welcome nh-invoices__hero"><div><p class="nh-patient__eyebrow"><span></span> SUIVI FINANCIER</p><h1>{% if is_admin %}Gestion des factures{% else %}Mes factures{% endif %}</h1><p>{% if is_admin %}Factures enregistrées dans NovaHospito, en lecture seule.{% else %}Consultez les factures associées à votre compte patient.{% endif %}</p></div><a class="nh-patient__welcome-link" href="{% url retour_url %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"/></svg>Retour</a></section>
+            {% if profile_missing %}
+                <section class="nh-invoices__notice" role="alert"><strong>Profil patient à compléter</strong><p>Aucune facture n’est affichée, car ce compte ne possède pas de fiche patient associée.</p></section>
+            {% else %}
+                <section class="nh-invoices__summary" aria-label="Résumé facturation">
+                    <article><small>FACTURES ENREGISTRÉES</small><strong>{{ total_factures }}</strong></article>
+                    <article><small>EN ATTENTE</small><strong>{{ attente_count }}</strong></article>
+                    <article><small>PAYÉES</small><strong>{{ payee_count }}</strong></article>
+                    <article><small>MONTANT TOTAL</small><strong>{% if total_montant %}{{ total_montant }}{% else %}0.00{% endif %} FCFA</strong></article>
+                </section>
+                <section class="nh-invoices__panel" aria-labelledby="nh-invoices-title">
+                    <div class="nh-invoices__heading"><div><p>HISTORIQUE</p><h2 id="nh-invoices-title">Factures enregistrées</h2><span>Les montants et statuts proviennent du dossier NovaHospito. Aucun paiement n’est effectué depuis cette page.</span></div><div class="nh-invoices__heading-actions"><span class="nh-invoices__count">{{ total_factures }} au total</span>{% if is_admin %}<a class="nh-invoice-form__create-link" href="{% url 'facturation:creer' %}">Créer une facture</a>{% endif %}</div></div>
+                    {% if factures_page.object_list %}
+                        <div class="nh-invoices__table-wrap"><table><thead><tr><th>Référence</th>{% if is_admin %}<th>Patient</th>{% endif %}<th>Date</th><th>Consultation</th><th>Montant</th><th>Statut</th></tr></thead><tbody>
+                            {% for facture in factures_page.object_list %}
+                                <tr><td><strong>#{{ facture.pk }}</strong></td>{% if is_admin %}<td>{{ facture.patient.get_full_name|default:facture.patient.username }}</td>{% endif %}<td>{{ facture.date|date:"d/m/Y" }}</td><td>{% if facture.consultation %}Dr. {{ facture.consultation.rendez_vous.medecin.get_full_name|default:facture.consultation.rendez_vous.medecin.username }}{% else %}<span class="nh-invoices__muted">Non liée</span>{% endif %}</td><td><strong>{{ facture.montant }} FCFA</strong></td><td>{% if facture.statut == 'payee' %}<span class="nh-invoices__status nh-invoices__status--paid">Payée</span>{% elif facture.statut == 'annulee' %}<span class="nh-invoices__status nh-invoices__status--cancelled">Annulée</span>{% elif facture.statut == 'attente' %}<span class="nh-invoices__status nh-invoices__status--pending">En attente</span>{% else %}<span class="nh-invoices__status">{{ facture.get_statut_display }}</span>{% endif %}</td></tr>
+                            {% endfor %}
+                        </tbody></table></div>
+                        {% if factures_page.has_other_pages %}<nav class="nh-invoices__pagination" aria-label="Pagination des factures">{% if factures_page.has_previous %}<a href="?page={{ factures_page.previous_page_number }}">← Précédent</a>{% endif %}<span>Page {{ factures_page.number }} / {{ factures_page.paginator.num_pages }}</span>{% if factures_page.has_next %}<a href="?page={{ factures_page.next_page_number }}">Suivant →</a>{% endif %}</nav>{% endif %}
+                    {% else %}
+                        <div class="nh-invoices__empty"><strong>Aucune facture enregistrée</strong><p>Lorsqu’une facture sera ajoutée à votre compte, elle apparaîtra ici.</p></div>
+                    {% endif %}
+                </section>
+            {% endif %}
+            <p class="nh-invoices__privacy">Les informations affichées proviennent uniquement des factures auxquelles votre profil est autorisé à accéder. Cette page ne modifie pas leur statut.</p>
+            <footer class="nh-patient__footer"><span>NovaHospito · Espace sécurisé</span><span>Facturation · Consultation seule · Sans paiement en ligne</span></footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

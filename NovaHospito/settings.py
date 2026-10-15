@@ -75,6 +75,7 @@ AUTHENTICATION_BACKENDS = [
     'comptes.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
 LOGIN_URL = 'accueil'
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -108,3 +109,5 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

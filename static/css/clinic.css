@@ -1,0 +1,199 @@
+.nh-clinic__metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.nh-clinic__metrics article {
+    min-height: 112px;
+}
+
+.nh-clinic__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 14px;
+}
+
+.nh-clinic__grid .nh-staff__card {
+    min-width: 0;
+}
+
+.nh-clinic__doctor-list,
+.nh-clinic__stock-list {
+    border-top: 1px solid #f0f2f7;
+}
+
+.nh-clinic__doctor-list > div {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 9px;
+    min-height: 54px;
+    border-bottom: 1px solid #f0f2f7;
+}
+
+.nh-clinic__doctor-list > div:last-child,
+.nh-clinic__stock-list > div:last-child {
+    border-bottom: 0;
+}
+
+.nh-clinic__doctor-list > div > i {
+    display: grid;
+    width: 29px;
+    height: 29px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--nh-staff-blue-pale);
+    color: var(--nh-staff-blue);
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 750;
+}
+
+.nh-clinic__doctor-list > div > i.teal {
+    background: var(--nh-staff-teal-pale);
+    color: var(--nh-staff-teal);
+}
+
+.nh-clinic__doctor-list > div > i.violet {
+    background: var(--nh-staff-violet-pale);
+    color: var(--nh-staff-violet);
+}
+
+.nh-clinic__doctor-list > div > span {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.nh-clinic__doctor-list > div > span strong {
+    overflow: hidden;
+    color: #303a53;
+    font-size: 9.5px;
+    font-weight: 670;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nh-clinic__doctor-list > div > span small {
+    color: var(--nh-staff-muted);
+    font-size: 8.5px;
+}
+
+.nh-clinic__doctor-list > div > b {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--nh-staff-green);
+    font-size: 8px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.nh-clinic__doctor-list > div > b::before {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    content: "";
+}
+
+.nh-clinic__doctor-list > div > b.is-busy {
+    color: var(--nh-staff-amber);
+}
+
+.nh-clinic__stock-list > div {
+    display: flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 9px;
+    border-bottom: 1px solid #f0f2f7;
+}
+
+.nh-clinic__stock-list > div > span {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 8px;
+}
+
+.nh-clinic__stock-list > div > span i {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+}
+
+.nh-clinic__stock-list .stock-blue { background: var(--nh-staff-blue); }
+.nh-clinic__stock-list .stock-green { background: var(--nh-staff-green); }
+.nh-clinic__stock-list .stock-amber { background: var(--nh-staff-amber); }
+.nh-clinic__stock-list .stock-red { background: var(--nh-staff-red); }
+
+.nh-clinic__stock-list > div > span strong {
+    overflow: hidden;
+    color: #303a53;
+    font-size: 9px;
+    font-weight: 630;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nh-clinic__stock-list > div > b {
+    color: var(--nh-staff-green);
+    font-size: 8px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.nh-clinic__stock-list > div > b.low {
+    color: var(--nh-staff-amber);
+}
+
+@media (max-width: 1180px) {
+    .nh-clinic__metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .nh-clinic .nh-staff__nav {
+        display: flex;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .nh-clinic .nh-staff__nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nh-clinic .nh-staff__nav a {
+        min-width: 66px;
+        flex: 1 0 66px;
+    }
+
+    .nh-clinic__grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .nh-clinic__metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 390px) {
+    .nh-clinic__metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .nh-clinic__metrics article {
+        min-height: 88px;
+    }
+
+    .nh-clinic .nh-staff__nav a {
+        min-width: 60px;
+        flex-basis: 60px;
+        font-size: 7.5px;
+    }
+}

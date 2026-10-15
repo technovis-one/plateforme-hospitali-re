@@ -1,0 +1,56 @@
+.nh-booking__hero { min-height: 112px; }
+.nh-booking__hero .nh-patient__welcome-link { flex: 0 0 auto; }
+.nh-booking__grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(220px, .8fr); align-items: start; gap: 14px; margin-bottom: 16px; }
+.nh-booking__panel, .nh-booking__side-note { padding: 18px; border: 1px solid var(--nh-patient-border); border-radius: 13px; background: #fff; box-shadow: 0 3px 12px rgb(26 39 70 / 3%); }
+.nh-booking__panel-heading { display: flex; align-items: center; gap: 11px; margin-bottom: 8px; }
+.nh-booking__panel-icon, .nh-booking__side-note-icon { display: grid; width: 34px; height: 34px; flex: 0 0 auto; place-items: center; border-radius: 10px; background: var(--nh-patient-blue-pale); color: var(--nh-patient-blue); }
+.nh-booking__panel-icon svg, .nh-booking__side-note-icon svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.nh-booking__panel-heading .nh-patient__section-kicker { margin-bottom: 3px; }
+.nh-booking__panel-heading h2 { margin: 0; color: var(--nh-patient-ink); font-size: 16px; font-weight: 730; letter-spacing: -.02em; }
+.nh-booking__intro { margin: 0 0 15px; color: var(--nh-patient-muted); font-size: 11px; line-height: 1.55; }
+.nh-booking__form { display: flex; flex-direction: column; gap: 13px; }
+.nh-booking__field { display: flex; min-width: 0; flex-direction: column; gap: 6px; }
+.nh-booking__field label { color: #38435b; font-size: 10px; font-weight: 700; }
+.nh-booking .nh-booking__input { width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid #dde2ee; border-radius: 8px; background: #fff; color: #26324c; font: inherit; font-size: 11px; }
+.nh-booking .nh-booking__input:focus { border-color: var(--nh-patient-blue); outline: 3px solid rgb(74 95 232 / 13%); }
+.nh-booking__form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+.nh-booking__error { color: #b73543; font-size: 9px; line-height: 1.4; }
+.nh-booking__hint { color: var(--nh-patient-muted); font-size: 9px; }
+.nh-booking__errors { padding: 9px 11px; border: 1px solid #f4cbd0; border-radius: 8px; background: #fff2f3; color: #a52c39; font-size: 10px; }
+.nh-booking__privacy { display: flex; align-items: flex-start; gap: 8px; padding: 10px; border: 1px solid #e7edf8; border-radius: 8px; background: #f7f9ff; color: #6f7d98; font-size: 9px; line-height: 1.5; }
+.nh-booking__privacy svg { width: 15px; height: 15px; flex: 0 0 auto; fill: none; stroke: var(--nh-patient-green); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.nh-booking__privacy strong { color: #3b4ed0; }
+.nh-booking__submit { display: flex; min-height: 42px; align-items: center; justify-content: center; gap: 10px; border: 0; border-radius: 9px; background: var(--nh-patient-blue); color: #fff; font: inherit; font-size: 11px; font-weight: 700; transition: background 140ms ease, transform 140ms ease; }
+.nh-booking__submit:hover { background: var(--nh-patient-blue-dark); }
+.nh-booking__submit:active { transform: scale(.98); }
+.nh-booking__side-note { padding: 16px; }
+.nh-booking__side-note-icon { margin-bottom: 10px; }
+.nh-booking__side-note > strong { display: block; color: #28324a; font-size: 12px; }
+.nh-booking__side-note ol { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; padding-left: 19px; color: #6e7890; font-size: 10px; line-height: 1.5; }
+.nh-booking__side-note li::marker { color: var(--nh-patient-blue); font-weight: 750; }
+.nh-booking__side-note p { margin: 0; padding-top: 10px; border-top: 1px solid #eff1f6; color: var(--nh-patient-muted); font-size: 9px; line-height: 1.5; }
+.nh-booking__messages { display: flex; flex-direction: column; gap: 7px; margin-bottom: 13px; }
+.nh-booking__message { margin: 0; padding: 10px 12px; border: 1px solid #c9e8d4; border-radius: 8px; background: #effaf2; color: #21643d; font-size: 10px; }
+.nh-booking__message--error { border-color: #f4cbd0; background: #fff2f3; color: #a52c39; }
+.nh-booking__notice { padding: 17px; border: 1px solid #f1d5ad; border-radius: 11px; background: #fff9ed; color: #755116; }
+.nh-booking__notice strong { font-size: 12px; }
+.nh-booking__notice p { margin: 6px 0 0; font-size: 10px; line-height: 1.6; }
+.nh-booking__list { margin-bottom: 14px; }
+.nh-booking__list .nh-patient__section-heading { margin-bottom: 12px; }
+.nh-booking__list .nh-patient__appointment { grid-template-columns: 36px minmax(0, 1fr) minmax(95px, auto) auto; }
+.nh-booking__list .nh-patient__empty { min-height: 105px; }
+.nh-booking__breadcrumb-link { color: inherit; text-decoration: none; }
+.nh-booking__messages:empty { display: none; }
+@media (max-width: 760px) {
+  .nh-booking__grid { grid-template-columns: 1fr; }
+  .nh-booking__panel, .nh-booking__side-note { padding: 14px; }
+  .nh-booking__hero { gap: 12px; }
+  .nh-booking__list .nh-patient__appointment { grid-template-columns: 33px minmax(0,1fr) auto; gap: 8px; padding: 9px 0; }
+  .nh-booking__list .nh-patient__appointment-date { grid-column: 2; grid-row: 2; flex-direction: row; gap: 7px; }
+  .nh-booking__list .nh-patient__status { grid-column: 3; grid-row: 1 / span 2; justify-self: end; }
+}
+@media (max-width: 430px) {
+  .nh-booking__form-row { grid-template-columns: 1fr; }
+  .nh-booking__hero .nh-patient__welcome-link { width: 100%; }
+  .nh-booking__list .nh-patient__section-heading > .nh-patient__count { display: none; }
+}
