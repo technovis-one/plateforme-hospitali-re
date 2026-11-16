@@ -91,6 +91,7 @@ def teleconsultations(request):
     context = {
         "profile_missing": False,
         "is_doctor": is_doctor,
+        "active_page": "teleconsultation" if is_doctor else None,
         "upcoming_teleconsultations": consultations.filter(date__gte=today).order_by(
             "date", "heure"
         )[:50],
@@ -182,17 +183,17 @@ def confirmer(request, rdv_id):
     ).first()
     if appointment is None:
         messages.error(request, "Ce rendez-vous est introuvable, déjà traité ou ne vous est pas attribué.")
-        return redirect("medecin")
+        return redirect("medecin_demandes")
     if appointment.date < timezone.localdate():
         messages.error(request, "Un rendez-vous passé ne peut pas être confirmé.")
-        return redirect("medecin")
+        return redirect("medecin_demandes")
     scheduled_at = timezone.make_aware(
         datetime.combine(appointment.date, appointment.heure),
         timezone.get_current_timezone(),
     )
     if timezone.now() > scheduled_at:
         messages.error(request, "L’heure de début est passée. Ce rendez-vous ne peut plus être confirmé pour lancer une salle.")
-        return redirect("medecin")
+        return redirect("medecin_demandes")
 
     updated = RendezVous.objects.filter(
         pk=appointment.pk,
@@ -203,4 +204,4 @@ def confirmer(request, rdv_id):
         messages.success(request, "Le rendez-vous a été confirmé.")
     else:
         messages.error(request, "Le rendez-vous a déjà été traité. Actualise ton planning.")
-    return redirect("medecin")
+    return redirect("medecin_demandes")

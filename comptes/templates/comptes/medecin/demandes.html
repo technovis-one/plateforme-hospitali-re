@@ -1,0 +1,11 @@
+{% extends "comptes/medecin/base.html" %}
+{% block doctor_content %}
+<section class="nh-staff__hero"><div><span class="nh-staff__eyebrow">ESPACE MÉDECIN · ACTIONS REQUISES</span><h1>Demandes à confirmer</h1><p>Examinez les rendez-vous qui vous sont attribués et confirmez ceux que vous pouvez prendre en charge.</p></div><span class="nh-staff__demo-badge"><i></i> Actions sécurisées</span></section>
+<section class="nh-staff__metrics" aria-label="Demandes en attente"><article><span class="nh-staff__metric-icon blue"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v18l-5-3-5 3V3Z"/><path d="M9 8h6M9 12h6"/></svg></span><small>À TRAITER</small><strong>{{ pending_appointments_count }}</strong><span>Rendez-vous en attente</span></article></section>
+<section class="nh-staff__card" aria-labelledby="doctor-pending-title">
+    <div class="nh-staff__card-head"><div><span class="nh-staff__kicker">VOTRE FILE DE TRAVAIL</span><h2 id="doctor-pending-title">Rendez-vous en attente</h2><p>Les demandes passées ou non attribuées ne peuvent pas être confirmées ici.</p></div><span class="nh-staff__count">{{ pending_appointments_count }} en attente</span></div>
+    <div class="nh-staff__schedule">
+        {% for rdv in pending_appointments %}<article class="nh-staff__appointment"><time>{{ rdv.date|date:"d/m/Y" }}<br>{{ rdv.heure|time:"H:i" }}</time><span class="nh-staff__timeline-dot"></span><span class="nh-staff__patient-avatar">{{ rdv.patient.first_name|slice:":1"|upper }}{{ rdv.patient.last_name|slice:":1"|upper }}</span><div class="nh-staff__appointment-copy"><strong>{{ rdv.patient.get_full_name|default:rdv.patient.username }}</strong><span>{% if rdv.type == 'teleconsultation' %}Téléconsultation{% else %}Consultation en présentiel{% endif %} · {{ rdv.date|date:"l d F" }}</span><span>{{ rdv.patient.num_tel|default:"Coordonnées téléphoniques non renseignées" }}</span></div><form method="post" action="{% url 'rdv:confirmer' rdv.pk %}" class="nh-rdv-confirm">{% csrf_token %}<button type="submit">Confirmer ce rendez-vous</button></form></article>{% empty %}<p class="nh-staff__empty-note">Aucune demande à confirmer. Vos prochaines demandes apparaîtront ici.</p>{% endfor %}
+    </div>
+</section>
+{% endblock %}

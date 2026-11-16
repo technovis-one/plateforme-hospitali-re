@@ -1,0 +1,5 @@
+{% extends "clinique/base.html" %}
+{% block clinic_content %}
+<section class="nh-staff__hero"><div><span class="nh-staff__eyebrow">PARAMÈTRES DE L’ÉTABLISSEMENT</span><h1>Identité & contact</h1><p>Coordonnées affichées dans l’espace de gestion clinique.</p></div></section>
+<section class="nh-staff__card nh-clinic-management__form-card"><div class="nh-staff__card-head"><div><span class="nh-staff__kicker">FICHE CLINIQUE</span><h2>Coordonnées officielles</h2></div></div><form method="post" class="nh-clinic-management__form">{% csrf_token %}{{ form.as_p }}<button class="nh-staff__action-link" type="submit">Enregistrer les coordonnées</button></form></section>
+{% endblock %}

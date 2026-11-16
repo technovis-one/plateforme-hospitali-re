@@ -98,100 +98,130 @@ def patient(request):
     return render(request, 'comptes/patient.html', context)
 
 
-@login_required
-def medecin(request):
+def _doctor_access(request):
     if request.user.role != Utilisateur.ROLE_MEDECIN:
         messages.error(request, "Accès réservé aux médecins.")
-        return redirect('accueil')
-    today = timezone.localdate()
-    today_appointments = (
-        RendezVous.objects.filter(medecin_id=request.user.pk, date=today)
-        .exclude(statut=RendezVous.STATUT_ANNULE)
-        .select_related('patient')
-        .order_by('heure')
+        return False
+    return True
+
+
+def _doctor_patients(user, today):
+    doctor_records = RendezVous.objects.filter(medecin_id=user.pk).exclude(
+        statut=RendezVous.STATUT_ANNULE
     )
-    pending_appointments = (
-        RendezVous.objects.filter(
-            medecin_id=request.user.pk,
-            date__gte=today,
-            statut=RendezVous.STATUT_ATTENTE,
-        )
-        .select_related('patient')
-        .order_by('date', 'heure')[:20]
-    )
-    doctor_appointment_records = RendezVous.objects.filter(
-        medecin_id=request.user.pk
-    ).exclude(statut=RendezVous.STATUT_ANNULE)
-    patient_ids = doctor_appointment_records.order_by().values('patient_id')
+    patient_ids = doctor_records.order_by().values("patient_id")
     visit_history = (
-        RendezVous.objects.filter(medecin_id=request.user.pk, date__lte=today)
+        RendezVous.objects.filter(medecin_id=user.pk, date__lte=today)
         .exclude(statut=RendezVous.STATUT_ANNULE)
-        .order_by('-date', '-heure')
+        .order_by("-date", "-heure")
     )
-    doctor_patients = (
+    patients = (
         Patient.objects.filter(pk__in=patient_ids)
-        .order_by('last_name', 'first_name')
-        .prefetch_related(
-            Prefetch('rendezvous', queryset=visit_history, to_attr='doctor_visits')
-        )[:30]
+        .order_by("last_name", "first_name")
+        .prefetch_related(Prefetch("rendezvous", queryset=visit_history, to_attr="doctor_visits"))
     )
-    doctor_patients_count = Patient.objects.filter(pk__in=patient_ids).distinct().count()
-    today_appointment_records = RendezVous.objects.filter(
-        medecin_id=request.user.pk, date=today
-    ).exclude(statut=RendezVous.STATUT_ANNULE)
-    today_appointment_count = today_appointment_records.count()
-    today_patient_count = (
-        today_appointment_records.order_by().values('patient_id').distinct().count()
+    return patients, patients.count()
+
+
+@login_required
+def medecin(request):
+    """Espace planning : rendez-vous du jour et indicateurs médecin."""
+    if not _doctor_access(request):
+        return redirect("accueil")
+    today = timezone.localdate()
+    today_records = RendezVous.objects.filter(medecin_id=request.user.pk, date=today)
+    appointments = (
+        today_records.exclude(statut=RendezVous.STATUT_ANNULE)
+        .select_related("patient")
+        .order_by("heure")
     )
-    today_teleconsultation_count = today_appointment_records.filter(
-        type=RendezVous.TYPE_TELECONSULTATION
-    ).count()
-    consultations_count = Consultation.objects.filter(
-        rendez_vous__medecin_id=request.user.pk
-    ).count()
-    recent_consultations = (
-        Consultation.objects.filter(rendez_vous__medecin_id=request.user.pk)
-        .select_related('rendez_vous', 'rendez_vous__patient')
-        .order_by('-date', '-pk')[:10]
-    )
-    consultation_appointments = (
-        RendezVous.objects.filter(
-            medecin_id=request.user.pk,
-            statut__in=(RendezVous.STATUT_CONFIRME, RendezVous.STATUT_TERMINE),
-        )
-        .filter(date__gte=today - timedelta(days=30))
-        .select_related('patient')
-        .order_by('date', 'heure')[:40]
-    )
-    next_teleconsultation = (
-        RendezVous.objects.filter(
-            medecin_id=request.user.pk,
-            type=RendezVous.TYPE_TELECONSULTATION,
-            statut=RendezVous.STATUT_CONFIRME,
-            date__gte=today,
-        )
-        .select_related('patient')
-        .order_by('date', 'heure')
-        .first()
-    )
-    return render(request, 'comptes/medecin.html', {
-        'doctor_patients': doctor_patients,
-        'doctor_patients_count': doctor_patients_count,
-        'today_appointments': today_appointments,
-        'today_appointment_count': today_appointment_count,
-        'today_patient_count': today_patient_count,
-        'today_teleconsultation_count': today_teleconsultation_count,
-        'pending_appointments': pending_appointments,
-        'pending_appointments_count': RendezVous.objects.filter(
+    return render(request, "comptes/medecin.html", {
+        "active_page": "planning",
+        "page_title": "Mon planning",
+        "today": today,
+        "today_appointments": appointments,
+        "today_appointment_count": appointments.count(),
+        "today_patient_count": appointments.order_by().values("patient_id").distinct().count(),
+        "today_teleconsultation_count": appointments.filter(type=RendezVous.TYPE_TELECONSULTATION).count(),
+        "pending_appointments_count": RendezVous.objects.filter(
             medecin_id=request.user.pk,
             date__gte=today,
             statut=RendezVous.STATUT_ATTENTE,
         ).count(),
-        'consultations_count': consultations_count,
-        'recent_consultations': recent_consultations,
-        'consultation_appointments': consultation_appointments,
-        'next_teleconsultation': next_teleconsultation,
-        'today': today,
+    })
+
+
+@login_required
+def medecin_patients(request):
+    """Patients ayant des rendez-vous non annulés attribués au médecin connecté."""
+    if not _doctor_access(request):
+        return redirect("accueil")
+    today = timezone.localdate()
+    patients, patient_count = _doctor_patients(request.user, today)
+    return render(request, "comptes/medecin/patients.html", {
+        "active_page": "patients",
+        "page_title": "Mes patients",
+        "doctor_patients": patients,
+        "doctor_patients_count": patient_count,
+        "today": today,
+    })
+
+
+@login_required
+def medecin_demandes(request):
+    """Demandes futures/en cours qui attendent la confirmation du médecin."""
+    if not _doctor_access(request):
+        return redirect("accueil")
+    today = timezone.localdate()
+    pending = (
+        RendezVous.objects.filter(
+            medecin_id=request.user.pk,
+            date__gte=today,
+            statut=RendezVous.STATUT_ATTENTE,
+        )
+        .select_related("patient")
+        .order_by("date", "heure")
+    )
+    return render(request, "comptes/medecin/demandes.html", {
+        "active_page": "demandes",
+        "page_title": "Demandes à confirmer",
+        "pending_appointments": pending,
+        "pending_appointments_count": pending.count(),
+        "today": today,
+    })
+
+
+@login_required
+def medecin_consultations(request):
+    """Rendez-vous confirmés/terminés et comptes-rendus associés au médecin."""
+    if not _doctor_access(request):
+        return redirect("accueil")
+    today = timezone.localdate()
+    appointment_queryset = (
+        RendezVous.objects.filter(
+            medecin_id=request.user.pk,
+            statut__in=(RendezVous.STATUT_CONFIRME, RendezVous.STATUT_TERMINE),
+        )
+        .select_related("patient")
+        .order_by("-date", "-heure")
+    )
+    appointments_count = appointment_queryset.count()
+    appointments = appointment_queryset[:100]
+    record_queryset = (
+        Consultation.objects.filter(rendez_vous__medecin_id=request.user.pk)
+        .select_related("rendez_vous", "rendez_vous__patient")
+        .order_by("-date", "-pk")
+    )
+    records_count = record_queryset.count()
+    records = record_queryset[:50]
+    return render(request, "comptes/medecin/consultations.html", {
+        "active_page": "consultation",
+        "page_title": "Consultations",
+        "consultation_appointments": appointments,
+        "consultation_appointments_count": appointments_count,
+        "recent_consultations": records,
+        "consultations_count": records_count,
+        "today": today,
     })
 
 
@@ -200,10 +230,4 @@ def admin(request):
     if request.user.role != Utilisateur.ROLE_ADMIN:
         messages.error(request, "Accès réservé aux administrateurs.")
         return redirect('accueil')
-    factures_recentes = Facture.objects.select_related('patient').order_by('-date', '-pk')[:8]
-    factures_attente_count = Facture.objects.filter(statut=Facture.STATUT_ATTENTE).count()
-    return render(request, 'comptes/admin.html', {
-        'factures_recentes': factures_recentes,
-        'factures_attente_count': factures_attente_count,
-    })
-
+    return redirect('clinique:dashboard')

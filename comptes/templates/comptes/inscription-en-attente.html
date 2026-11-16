@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}NovaHospito — Vérifiez votre e-mail{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/email-verification.css' %}?v=20261115-2">{% endblock %}
+{% block content %}
+<main class="nh-email-verification"><section class="nh-email-verification__card" aria-labelledby="nh-wait-title">
+    <div class="nh-email-verification__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></div>
+    <p class="nh-email-verification__eyebrow">INSCRIPTION PATIENT</p>
+    <h1 id="nh-wait-title">Vérifiez votre boîte e-mail</h1>
+    <p>Votre demande est enregistrée, mais le compte reste inactif pour le moment. Ouvrez le message NovaHospito et cliquez sur son lien de confirmation. Vous pourrez ensuite vous connecter avec votre adresse e-mail et votre mot de passe.</p>
+    <div class="nh-email-verification__notice"><strong>Vous testez en local ?</strong><br>Si l’envoi réel n’est pas configuré, le lien de confirmation apparaît dans le terminal où le serveur Django est lancé.</div>
+    <a class="nh-email-verification__back" href="{% url 'accueil' %}">Retour à la connexion</a>
+</section></main>
+{% endblock %}

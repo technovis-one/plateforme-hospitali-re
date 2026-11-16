@@ -1,0 +1,45 @@
+/* Identité NovaHospito partagée par les espaces et applications Django. */
+.nh-sidebar-brand-logo,
+.nh-global-brand-logo,
+.nh-patient__brand img.nh-global-brand-logo,
+.nh-staff__brand img.nh-global-brand-logo {
+    display: block;
+    width: min(100%, 212px);
+    max-width: 100%;
+    height: auto;
+    max-height: 72px;
+    flex: 0 0 auto;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.nh-patient__brand,
+.nh-staff__brand {
+    min-width: 0;
+}
+
+@media (max-width: 1180px) {
+    .nh-patient__brand img.nh-global-brand-logo,
+    .nh-staff__brand img.nh-global-brand-logo {
+        width: min(100%, 196px);
+        max-height: 66px;
+    }
+}
+
+/* Le lien actif reste bleu dans les deux espaces. */
+.nh-patient__nav a.is-active,
+.nh-patient__nav a[aria-current="page"] {
+    background: var(--nh-patient-blue, #4a5fe8);
+    color: #fff;
+}
+
+.nh-staff__nav a.is-active,
+.nh-staff__nav a[aria-current="page"],
+.nh-doctor .nh-staff__sidebar nav a.is-active,
+.nh-doctor .nh-staff__sidebar nav a[aria-current="page"] {
+    background: var(--nh-staff-blue, #4a5fe8);
+    color: #fff;
+}

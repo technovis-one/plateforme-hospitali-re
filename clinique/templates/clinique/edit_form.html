@@ -1,0 +1,5 @@
+{% extends "clinique/base.html" %}
+{% block clinic_content %}
+<section class="nh-staff__hero"><div><span class="nh-staff__eyebrow">GESTION CLINIQUE · MODIFICATION</span><h1>{{ page_title }}</h1><p>{{ object_title }}</p></div></section>
+<section class="nh-staff__card nh-clinic-management__form-card"><div class="nh-staff__card-head"><div><span class="nh-staff__kicker">INFORMATIONS ENREGISTRÉES</span><h2>Mettre à jour</h2></div></div><form method="post" class="nh-clinic-management__form">{% csrf_token %}{{ form.as_p }}<button class="nh-staff__action-link" type="submit">Enregistrer</button><a href="{% url return_url %}">Annuler</a></form></section>
+{% endblock %}

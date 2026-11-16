@@ -11,14 +11,21 @@
     <link rel="stylesheet" href="{% static 'css/facturation.css' %}?v=20261008-1">
     <link rel="stylesheet" href="{% static 'css/step8-modules.css' %}?v=20261008-1">
     <link rel="stylesheet" href="{% static 'css/patient-navigation.css' %}?v=20261010-1">
+    <link rel="stylesheet" href="{% static 'css/clinic-admin-mobile-nav.css' %}?v=20261115-admin-nav-1">
+    <link rel="stylesheet" href="{% static 'css/nova-global-brand.css' %}?v=20261106-global-logo-1">
+    <script src="{% static 'js/patient-nav-active.js' %}?v=20261106-patient-nav-1" defer></script>
+    <link rel="stylesheet" href="{% static 'css/nova-medecin-nav-v4.css' %}?v=20261106-4">
+    <script src="{% static 'js/patient-nav-active-v4.js' %}?v=20261106-4" defer></script>
 </head>
 <body>
-<div class="nh-patient nh-invoices">
+<div class="nh-patient nh-invoices nh-invoices--admin">
     <aside class="nh-patient__sidebar">
-        <a class="nh-patient__brand" href="{% url 'admin' %}" aria-label="NovaHospito — espace clinique"><img src="{% static 'img/logo.png' %}" alt="" width="38" height="38"><span>Nova<span>Hospito</span><small>GESTION HOSPITALIÈRE</small></span></a>
+        <a class="nh-patient__brand" href="{% url 'admin' %}" aria-label="NovaHospito — espace clinique">
+            <img class="nh-sidebar-brand-logo nh-global-brand-logo" src="{% static 'img/auth/novahospito-logo-transparent.png' %}" alt="NovaHospito â€” Groupe hospitalier" width="1800" height="579">
+        </a>
         <div class="nh-patient__workspace"><span>VOTRE ESPACE</span><strong>Administration</strong></div>
         <p class="nh-patient__nav-label">MENU PRINCIPAL</p>
-        <nav class="nh-patient__nav" aria-label="Navigation administration"><a href="{% url 'admin' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Vue clinique</span></a><a class="is-active" href="{% url 'facturation:historique' %}" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M15 3v5h5M9 13h6M9 17h4"/></svg><span>Facturation</span></a></nav>
+        <nav class="nh-patient__nav" aria-label="Navigation administration">{% include "comptes/partials/clinic-admin-navigation.html" with active_page="facturation" %}</nav>
         {% include "comptes/partials/patient-sidebar-footer.html" %}
     </aside>
     <div class="nh-patient__main">

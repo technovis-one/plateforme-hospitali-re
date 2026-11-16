@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
-from .models import Patient
+from .models import Patient, Utilisateur
 
 
 INPUT_CLASS = "input input-bordered w-full"
@@ -106,9 +107,18 @@ class InscriptionPatientForm(UserCreationForm):
             {"class": INPUT_CLASS, "placeholder": "••••••••"}
         )
 
+    def clean_email(self):
+        email = self.cleaned_data["email"].strip().lower()
+        if Utilisateur.objects.filter(email__iexact=email).exists():
+            raise ValidationError("Cette adresse e-mail est déjà associée à un compte.")
+        return email
+
     def save(self, commit=True):
         patient = super().save(commit=False)
         patient.role = Patient.ROLE_PATIENT
+        patient.is_active = False
+        patient.is_staff = False
+        patient.is_superuser = False
         if commit:
             patient.save()
         return patient

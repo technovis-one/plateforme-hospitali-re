@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#141b2e">
+    <title>NovaHospito — {{ page_title|default:"Espace médecin" }}</title>
+    <link rel="stylesheet" href="{% static 'css/staff.css' %}">
+    <link rel="stylesheet" href="{% static 'css/step8-modules.css' %}?v=20261008-1">
+    <link rel="stylesheet" href="{% static 'css/staff-support.css' %}?v=20261010-1">
+    <link rel="stylesheet" href="{% static 'css/medecin-lisibilite.css' %}?v=20261010-1">
+    <link rel="stylesheet" href="{% static 'css/nova-sidebar-brand.css' %}?v=20261015-sidebar-logo">
+    <link rel="stylesheet" href="{% static 'css/nova-global-brand.css' %}?v=20261106-global-logo-1">
+    <link rel="stylesheet" href="{% static 'css/doctor-modules.css' %}?v=20261106-1">
+</head>
+<body>
+<div class="nh-staff nh-doctor" id="overview">
+    <aside class="nh-staff__sidebar">
+        <a class="nh-staff__brand" href="{% url 'medecin' %}" aria-label="NovaHospito, espace médecin">
+            <img class="nh-sidebar-brand-logo nh-global-brand-logo" src="{% static 'img/auth/novahospito-logo-transparent.png' %}" alt="NovaHospito — Groupe hospitalier" width="1800" height="579">
+        </a>
+        <div class="nh-staff__workspace"><small>VOTRE CABINET</small><strong>Clinique NovaHospito</strong></div>
+        <div class="nh-staff__caption">ESPACE DE TRAVAIL</div>
+        {% include "comptes/partials/doctor-navigation.html" with active_page=active_page %}
+        <div class="nh-staff__sidebar-spacer"></div>
+        <div class="nh-staff__support"><span class="nh-staff__support-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"/><path d="M8 12h8m-4-4v8"/></svg></span><strong>Besoin d’aide ?</strong><p>Notre équipe est là pour vous accompagner.</p><span class="nh-staff__support-link">Contacter le support <span aria-hidden="true">→</span></span></div>
+        <a class="nh-staff__logout" href="{% url 'deconnexion' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>Se déconnecter</a>
+        <div class="nh-staff__profile">
+            <span class="nh-staff__avatar">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span>
+            <span class="nh-staff__profile-copy"><strong>{{ user.get_full_name|default:user.username }}</strong><small>{{ user.specialite|default:"Médecin" }}</small></span>
+        </div>
+    </aside>
+    <div class="nh-staff__main">
+        <header class="nh-staff__topbar"><p>NovaHospito <span>/</span> {{ page_title|default:"Espace médecin" }}</p><div class="nh-staff__top-profile"><span class="nh-staff__secure"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.4-2.8 7.8-7 10-4.2-2.2-7-5.6-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Espace sécurisé</span><span class="nh-staff__avatar nh-staff__avatar--top">{% if user.photo %}<img src="{{ user.photo.url }}" alt="">{% else %}{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}{% endif %}</span><span class="nh-staff__top-name"><strong>{{ user.get_full_name|default:user.username }}</strong><small>{{ user.specialite|default:"Médecin" }}</small></span></div></header>
+        <main class="nh-staff__content nh-doctor-page">
+            {% if messages %}<div class="nh-booking__messages" aria-live="polite">{% for message in messages %}<p class="nh-booking__message nh-booking__message--{{ message.tags|default:'info' }}">{{ message }}</p>{% endfor %}</div>{% endif %}
+            {% block doctor_content %}{% endblock %}
+            <footer class="nh-staff__footer"><span>NovaHospito · Espace sécurisé</span><span>Données affichées selon vos rendez-vous et dossiers attribués</span></footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

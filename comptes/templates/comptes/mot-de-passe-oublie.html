@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}NovaHospito — Mot de passe oublié{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/email-verification.css' %}?v=20261115-2">{% endblock %}
+{% block content %}
+<main class="nh-email-verification"><section class="nh-email-verification__card" aria-labelledby="nh-reset-title">
+    <div class="nh-email-verification__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg></div>
+    <p class="nh-email-verification__eyebrow">RÉCUPÉRATION DU COMPTE</p>
+    <h1 id="nh-reset-title">Mot de passe oublié ?</h1>
+    <p>Saisissez l’adresse e-mail associée à votre compte actif. Si un compte peut recevoir le message, un lien sécurisé vous sera envoyé.</p>
+    {% if messages %}<div class="nh-email-verification__messages" aria-live="polite">{% for message in messages %}<p class="nh-email-verification__error" role="alert">{{ message }}</p>{% endfor %}</div>{% endif %}
+    <form method="post" class="nh-email-verification__form">
+        {% csrf_token %}
+        <label for="{{ form.email.id_for_label }}">Adresse e-mail</label>
+        {{ form.email }}
+        {% if form.email.errors %}<p class="nh-email-verification__error" role="alert">{{ form.email.errors.0 }}</p>{% endif %}
+        <button type="submit">Envoyer le lien de réinitialisation</button>
+    </form>
+    <a class="nh-email-verification__back" href="{% url 'accueil' %}">Retour à la connexion</a>
+</section></main>
+{% endblock %}

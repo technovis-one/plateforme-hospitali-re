@@ -1,0 +1,5 @@
+{% extends "clinique/base.html" %}
+{% block clinic_content %}
+<section class="nh-staff__hero"><div><span class="nh-staff__eyebrow">INVENTAIRE · MODIFICATION</span><h1>Modifier {{ article.nom }}</h1><p>Les quantités ne sont pas modifiables ici : utilise un mouvement d’entrée ou de sortie pour conserver l’historique.</p></div></section>
+<section class="nh-staff__card nh-clinic-management__form-card"><div class="nh-staff__card-head"><div><span class="nh-staff__kicker">INFORMATIONS DE L’ARTICLE</span><h2>Nom, catégorie, seuil et péremption</h2></div></div><form method="post" class="nh-clinic-management__form">{% csrf_token %}{{ form.as_p }}<button class="nh-staff__action-link" type="submit">Enregistrer</button><a href="{% url 'clinique:stock' %}">Annuler</a></form></section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}NovaHospito — Mot de passe modifié{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/email-verification.css' %}?v=20261115-2">{% endblock %}
+{% block content %}
+<main class="nh-email-verification"><section class="nh-email-verification__card" aria-labelledby="nh-reset-complete-title">
+    <div class="nh-email-verification__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17l9-10"/></svg></div>
+    <p class="nh-email-verification__eyebrow">COMPTE SÉCURISÉ</p>
+    <h1 id="nh-reset-complete-title">Mot de passe mis à jour</h1>
+    <p>Votre nouveau mot de passe est enregistré. Vous pouvez maintenant vous reconnecter à NovaHospito.</p>
+    <a class="nh-email-verification__back" href="{% url 'accueil' %}">Me connecter</a>
+</section></main>
+{% endblock %}

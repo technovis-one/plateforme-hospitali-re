@@ -1,0 +1,123 @@
+.nh-clinic-management { --cm-ink: #202a42; --cm-muted: #68758e; --cm-border: #e7ebf2; }
+.nh-clinic-management .nh-staff__hero { margin-bottom: 18px; }
+.nh-clinic-management .nh-staff__hero p { max-width: 720px; }
+.nh-clinic-management .nh-staff__metrics { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.nh-clinic-management .nh-staff__metrics article { min-height: 126px; }
+.nh-clinic-management .nh-staff__metrics article small { font-size: 10px; }
+.nh-clinic-management .nh-staff__metrics article strong { font-size: 26px; }
+.nh-clinic-management .nh-staff__metrics article > span:last-child { font-size: 12px; line-height: 1.4; }
+.nh-clinic-management__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 16px; }
+.nh-clinic-management__grid > .nh-staff__card { min-width: 0; }
+.nh-clinic-management .nh-staff__card { padding: 19px; margin-bottom: 16px; }
+.nh-clinic-management .nh-staff__card-head h2 { font-size: 18px; }
+.nh-clinic-management .nh-staff__card-head p { font-size: 13px; }
+.nh-clinic-management__details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 18px; margin: 0; }
+.nh-clinic-management__details > div { padding: 12px 0; border-top: 1px solid #f0f2f7; }
+.nh-clinic-management__details dt { color: var(--cm-muted); font-size: 11px; font-weight: 700; }
+.nh-clinic-management__details dd { margin: 4px 0 0; color: var(--cm-ink); font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
+.nh-clinic-management__note { padding: 14px; border-radius: 10px; background: #f5f7fc; color: var(--cm-muted); font-size: 13px; line-height: 1.6; }
+.nh-clinic-management__alerts { border-top: 1px solid #f0f2f7; }
+.nh-clinic-management__alerts > div { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f2f7; }
+.nh-clinic-management__alerts > div > span { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+.nh-clinic-management__alerts strong { color: var(--cm-ink); font-size: 13px; }
+.nh-clinic-management__alerts small { color: var(--cm-muted); font-size: 12px; }
+.nh-clinic-management__alerts b { font-size: 11px; white-space: nowrap; }
+.nh-clinic-management__alerts b.is-warning { color: #a86408; }
+.nh-clinic-management__alerts b.is-danger { color: #b42332; }
+.nh-clinic-management__form-card { max-width: 100%; }
+.nh-clinic-management__form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px 16px; }
+.nh-clinic-management__form p { display: flex; min-width: 0; flex-direction: column; gap: 6px; margin: 0; color: #44516a; font-size: 13px; font-weight: 650; }
+.nh-clinic-management__form p:has(textarea), .nh-clinic-management__form p:has(input[type="checkbox"]), .nh-clinic-management__form p:has(ul.errorlist) { grid-column: 1 / -1; }
+.nh-clinic-management__form input:not([type="checkbox"]), .nh-clinic-management__form select, .nh-clinic-management__form textarea { width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid #dce2ed; border-radius: 8px; background: white; color: var(--cm-ink); font: inherit; font-size: 14px; }
+.nh-clinic-management__form textarea { min-height: 84px; resize: vertical; }
+.nh-clinic-management__form input:focus, .nh-clinic-management__form select:focus, .nh-clinic-management__form textarea:focus { border-color: #4961e8; outline: 3px solid rgb(73 97 232 / 14%); }
+.nh-clinic-management__form .helptext { color: var(--cm-muted); font-size: 11px; font-weight: 400; }
+.nh-clinic-management__form .errorlist { margin: 0; padding-left: 18px; color: #b42332; font-size: 12px; }
+.nh-clinic-management__form > button { width: fit-content; min-height: 42px; grid-column: 1 / -1; padding: 10px 15px; border: 0; cursor: pointer; font: inherit; }
+.nh-clinic-management__rows { border-top: 1px solid #eff1f6; }
+.nh-clinic-management__rows > article { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 12px; min-height: 66px; padding: 11px 0; border-bottom: 1px solid #eff1f6; }
+.nh-clinic-management__actions { display: flex; align-items: center; gap: 9px; }
+.nh-clinic-management__rows > article > div { display: flex; min-width: 0; flex-direction: column; gap: 4px; }
+.nh-clinic-management__rows strong { color: var(--cm-ink); font-size: 14px; }
+.nh-clinic-management__rows small, .nh-clinic-management__rows > article > span { color: var(--cm-muted); font-size: 12px; }
+.nh-clinic-management__text-button { padding: 7px 10px; border: 1px solid #e0e5ef; border-radius: 7px; background: #fff; color: #43506a; font: inherit; font-size: 12px; font-weight: 650; cursor: pointer; }
+.nh-clinic-management__text-button:hover { border-color: #4961e8; color: #344bd0; }
+.nh-clinic-management__text-link { color: #344bd0; font-size: 12px; font-weight: 700; text-decoration: none; }
+.nh-clinic-management__text-link:hover { text-decoration: underline; }
+.nh-clinic-management .nh-staff__table-wrap th { font-size: 11px; }
+.nh-clinic-management .nh-staff__table-wrap td { font-size: 13px; }
+.nh-clinic-management .nh-staff__empty-note { font-size: 13px; }
+.nh-clinic-management .nh-staff__appointment { min-height: 68px; }
+.nh-clinic-management .nh-staff__appointment-copy strong, .nh-clinic-management .nh-staff__appointment time { font-size: 13px; }
+.nh-clinic-management .nh-staff__appointment-copy span { font-size: 12px; }
+.nh-clinic-management__stock-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.nh-clinic-management .nh-staff__action-link:focus-visible, .nh-clinic-management button:focus-visible, .nh-clinic-management a:focus-visible { outline: 3px solid #aebcff; outline-offset: 3px; }
+@media (max-width: 1050px) { .nh-clinic-management .nh-clinic__metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .nh-clinic-management__grid { grid-template-columns: 1fr; gap: 0; }
+  .nh-clinic-management__details { grid-template-columns: 1fr; }
+  .nh-clinic-management .nh-clinic__metrics, .nh-clinic-management__stock-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .nh-clinic-management__rows > article { grid-template-columns: minmax(0, 1fr) auto; }
+  .nh-clinic-management__rows > article > .nh-clinic-management__actions { grid-column: 1 / -1; justify-content: flex-end; }
+  .nh-clinic-management .nh-staff__table-wrap { overflow-x: auto; }
+  .nh-clinic-management .nh-staff__table-wrap table { min-width: 650px; }
+}
+@media (max-width: 480px) {
+  .nh-clinic-management__form { grid-template-columns: 1fr; }
+  .nh-clinic-management__form p, .nh-clinic-management__form p:has(textarea), .nh-clinic-management__form p:has(input[type="checkbox"]) { grid-column: 1; }
+  .nh-clinic-management .nh-clinic__metrics, .nh-clinic-management__stock-metrics { grid-template-columns: 1fr !important; }
+}
+
+/* Typographie lisible et navigation clinique toujours horizontale sur mobile. */
+.nh-clinic { font-size: 16px; }
+.nh-clinic .nh-staff__workspace small, .nh-clinic .nh-staff__caption { font-size: 11px; }
+.nh-clinic .nh-staff__workspace strong { font-size: 13px; }
+.nh-clinic .nh-staff__nav a, .nh-clinic .nh-staff__logout { font-size: 13px; }
+.nh-clinic .nh-staff__support strong { font-size: 13px; }
+.nh-clinic .nh-staff__support p { font-size: 12px; }
+.nh-clinic .nh-staff__topbar > p { font-size: 14px; }
+.nh-clinic .nh-staff__top-name strong { font-size: 13px; }
+.nh-clinic .nh-staff__top-name small, .nh-clinic .nh-staff__secure { font-size: 12px; }
+.nh-clinic .nh-staff__hero p:last-child { font-size: 15px; line-height: 1.5; }
+.nh-clinic .nh-staff__eyebrow, .nh-clinic .nh-staff__demo-badge { font-size: 11px; }
+.nh-clinic .nh-staff__metrics article small { font-size: 11px; }
+.nh-clinic .nh-staff__metrics article > span:last-child { font-size: 13px; line-height: 1.45; }
+.nh-clinic .nh-staff__card-head h2 { font-size: 20px; }
+.nh-clinic .nh-staff__card-head p:last-child { font-size: 14px; line-height: 1.5; }
+.nh-clinic .nh-staff__table-wrap th { font-size: 12px; }
+.nh-clinic .nh-staff__table-wrap td { font-size: 14px; }
+.nh-clinic .nh-staff__footer { font-size: 12px; }
+
+@media (max-width: 760px) {
+  .nh-clinic { padding-bottom: max(78px, calc(72px + env(safe-area-inset-bottom))); }
+  .nh-clinic .nh-staff__nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 1px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+  .nh-clinic .nh-staff__nav::-webkit-scrollbar { display: none; }
+  .nh-clinic .nh-staff__nav a {
+    min-width: 0;
+    min-height: 58px;
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding: 4px 1px;
+    font-size: clamp(7px, 1.55vw, 9px);
+    line-height: 1.05;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+  .nh-clinic .nh-staff__nav svg { width: 17px; height: 17px; }
+}
+
+@media (max-width: 390px) {
+  .nh-clinic .nh-staff__nav a { min-height: 60px; font-size: 7px; }
+  .nh-clinic .nh-staff__nav svg { width: 16px; height: 16px; }
+}

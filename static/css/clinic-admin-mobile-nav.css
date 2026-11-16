@@ -1,0 +1,35 @@
+/* Barre de navigation complète réservée à l’administration, dans Facturation. */
+.nh-invoices--admin .nh-admin-nav__label-short { display: none; }
+
+@media (max-width: 760px) {
+  .nh-invoices--admin { padding-bottom: max(78px, calc(72px + env(safe-area-inset-bottom))); }
+  .nh-invoices--admin .nh-patient__nav {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 1px;
+  }
+  .nh-invoices--admin .nh-patient__nav a {
+    min-width: 0;
+    min-height: 58px;
+    flex: 1 1 0;
+    gap: 3px;
+    padding: 4px 1px;
+    font-size: clamp(7px, 1.65vw, 9px);
+    line-height: 1.05;
+    text-align: center;
+  }
+  .nh-invoices--admin .nh-patient__nav a span.nh-admin-nav__label-long { display: none; }
+  .nh-invoices--admin .nh-patient__nav a span.nh-admin-nav__label-short {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+  }
+  .nh-invoices--admin .nh-patient__nav svg { width: 17px; height: 17px; }
+}
+
+@media (max-width: 360px) {
+  .nh-invoices--admin .nh-patient__nav a { min-height: 56px; font-size: 7px; }
+  .nh-invoices--admin .nh-patient__nav svg { width: 16px; height: 16px; }
+}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}NovaHospito — Nouveau mot de passe{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/email-verification.css' %}?v=20261115-2">{% endblock %}
+{% block content %}
+<main class="nh-email-verification"><section class="nh-email-verification__card" aria-labelledby="nh-new-password-title">
+    <div class="nh-email-verification__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg></div>
+    {% if validlink %}
+        <p class="nh-email-verification__eyebrow">SÉCURITÉ DU COMPTE</p>
+        <h1 id="nh-new-password-title">Choisissez un nouveau mot de passe</h1>
+        <p>Créez un mot de passe que vous n’utilisez pas déjà ailleurs.</p>
+        {% if form.non_field_errors %}<div class="nh-email-verification__error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+        <form method="post" class="nh-email-verification__form">
+            {% csrf_token %}
+            <label for="{{ form.new_password1.id_for_label }}">Nouveau mot de passe</label>
+            {{ form.new_password1 }}
+            {% if form.new_password1.errors %}<p class="nh-email-verification__error" role="alert">{{ form.new_password1.errors.0 }}</p>{% endif %}
+            <label for="{{ form.new_password2.id_for_label }}">Confirmer le nouveau mot de passe</label>
+            {{ form.new_password2 }}
+            {% if form.new_password2.errors %}<p class="nh-email-verification__error" role="alert">{{ form.new_password2.errors.0 }}</p>{% endif %}
+            <button type="submit">Enregistrer mon nouveau mot de passe</button>
+        </form>
+    {% else %}
+        <p class="nh-email-verification__eyebrow">LIEN NON VALIDE</p>
+        <h1 id="nh-new-password-title">Lien expiré ou invalide</h1>
+        <p>Pour votre sécurité, ce lien ne peut plus être utilisé. Demandez-en un nouveau depuis la page de récupération.</p>
+        <a class="nh-email-verification__back" href="{% url 'password_reset' %}">Demander un nouveau lien</a>
+    {% endif %}
+    <p><a class="nh-email-verification__back" href="{% url 'accueil' %}">Retour à la connexion</a></p>
+</section></main>
+{% endblock %}

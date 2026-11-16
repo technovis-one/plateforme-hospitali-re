@@ -10,13 +10,16 @@
     <link rel="stylesheet" href="{% static 'css/patient-lisibilite.css' %}?v=20261008-dashboard-font-2">
     <link rel="stylesheet" href="{% static 'css/dossier-medical.css' %}?v=20261008-1">
     <link rel="stylesheet" href="{% static 'css/patient-navigation.css' %}?v=20261010-1">
+    <link rel="stylesheet" href="{% static 'css/nova-global-brand.css' %}?v=20261106-global-logo-1">
+    <script src="{% static 'js/patient-nav-active.js' %}?v=20261106-patient-nav-1" defer></script>
+    <link rel="stylesheet" href="{% static 'css/nova-medecin-nav-v4.css' %}?v=20261106-4">
+    <script src="{% static 'js/patient-nav-active-v4.js' %}?v=20261106-4" defer></script>
 </head>
 <body>
 <div class="nh-patient nh-record" id="medical-record">
     <aside class="nh-patient__sidebar">
         <a class="nh-patient__brand" href="{% url 'patient' %}" aria-label="NovaHospito — tableau de bord patient">
-            <img src="{% static 'img/logo.png' %}" alt="" width="38" height="38">
-            <span>Nova<span>Hospito</span><small>LA SANTÉ, ENSEMBLE</small></span>
+            <img class="nh-sidebar-brand-logo nh-global-brand-logo" src="{% static 'img/auth/novahospito-logo-transparent.png' %}" alt="NovaHospito â€” Groupe hospitalier" width="1800" height="579">
         </a>
         <div class="nh-patient__workspace"><span>VOTRE ESPACE</span><strong>Espace patient</strong></div>
         <p class="nh-patient__nav-label">MENU PRINCIPAL</p>

@@ -5,6 +5,7 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/connexion.css' %}?v=20261015-typo-renforcee">
+<link rel="stylesheet" href="{% static 'css/auth-signup-fix.css' %}?v=20261116-1">
 {% endblock %}
 
 {% block content %}
@@ -77,7 +78,7 @@
                 </div>
 
                 <div class="nh-auth__forgot">
-                    <a href="#">Mot de passe oublié ?</a>
+                    <a href="{% url 'password_reset' %}">Mot de passe oublié ?</a>
                 </div>
 
                 <button class="nh-auth__submit" type="submit">
@@ -92,13 +93,6 @@
                 Nouveau sur NovaHospito ?
                 <a href="{% url 'inscription' %}">Créer un compte patient</a>
             </p>
-
-            <div class="nh-auth__staff">
-                <span>Personnel clinique ?</span>
-                <a href="{% url 'medecin' %}">Espace médecin</a>
-                <span aria-hidden="true">·</span>
-                <a href="{% url 'admin' %}">Espace clinique</a>
-            </div>
 
             <p class="nh-auth__security">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
